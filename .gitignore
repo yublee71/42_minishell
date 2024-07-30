@@ -14,7 +14,6 @@ minishell
 build/
 
 #for test
-tester/
-!tester/
+tester/*
 !tester/minitest.sh
 args.txt
