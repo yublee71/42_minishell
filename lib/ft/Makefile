@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 14:44:19 by yublee            #+#    #+#              #
-#    Updated: 2024/06/18 00:18:04 by abelov           ###   ########.fr        #
+#    Updated: 2024/08/01 23:06:26 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCLUDE		= -I. -I./include
 SRCS		:=
 BONUS_SRCS	:=
 BUILD_DIR	= build
-DIRS		= bonus ctype gnl io printf std string tab
+DIRS		= bonus ctype gnl io printf std string
 
 include $(addsuffix /Makefile.mk,$(DIRS))
 
