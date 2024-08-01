@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/07/30 16:16:12 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/01 18:20:09 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,11 +56,11 @@ $(BUILD_DIR)/%.o: %.c
 
 clean:
 		$(RM) -rf $(BUILD_DIR)
-		@$(MAKE) -C $(LIBFT_DIR) clean
+		$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 		$(RM) $(RMFLAGS) $(NAME)
-		@$(MAKE) -C $(LIBFT_DIR) fclean
+		$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
