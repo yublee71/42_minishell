@@ -11,10 +11,15 @@
 # **************************************************************************** #
 
 minishell
-build/
-lib/ft/libft.a
 
 #for test
 tester/*
 !tester/minitest.sh
 args.txt
+
+#libraries
+*.a
+
+#object files
+build/
+*.a
