@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:19 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/05 22:25:09 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:41:49 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	free_before_exit(t_info	info)
 {
 	if (info.fds)
 		free_fds(info.fds, info.cmd_cnt - 1);
-	if (info.cmd_list)
-		ft_lstclear(info.cmd_list, del);
+	// if (info.cmd_list)
+	// 	ft_lstclear(info.cmd_list, del);
 	if (info.root)
 		btree_apply_suffix(info.root, free_node);
 }

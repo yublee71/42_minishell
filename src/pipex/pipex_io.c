@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/30 16:09:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:05:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	read_til_delimiter(char *str, t_info info)
 	int		tty_fd;
 	int		new_fd;
 	char	filename[FILENAME_MAX];
-
 
 	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
 	tty_fd = open("/dev/tty", O_RDONLY);

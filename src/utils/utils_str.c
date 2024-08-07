@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:56:28 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:32:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:41:16 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,14 @@ static char	*ft_copytil(char *s, char *s_sub, char c)
 	return (result);
 }
 
-char	**ft_split_except_quoted_part(char *s, char c)
+char	**ft_split_except_quoted_part(char *s, char *s_sub, char c)
 {
-	char	*s_sub;
 	size_t	i;
 	size_t	j;
 	char	**result;
 
 	if (!s)
 		return (NULL);
-	s_sub = mask_quoted_part(s);
 	result = (char **)malloc((ft_wordcount(s_sub, c) + 1) * sizeof(char *));
 	if (!result)
 		exit(EXIT_FAILURE);
@@ -92,7 +90,6 @@ char	**ft_split_except_quoted_part(char *s, char c)
 			j++;
 	}
 	result[i] = NULL;
-	free(s_sub);
 	return (result);
 }
 

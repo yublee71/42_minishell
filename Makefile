@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/07 01:43:03 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/07 02:34:09 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ LIBS			:= $(LIBFT)
 LINK_FLAGS		:= -L $(LIBFT_DIR) -lft
 
 SRCS			= \
+					src/main.c \
 					src/parsing/expansion.c \
 					src/parsing/main.c \
 					src/parsing/post_syntax_validation.c \
@@ -38,8 +39,8 @@ SRCS			= \
 					src/utils/utils_array.c \
 					src/utils/utils.c \
 					src/utils/utils_str.c \
-					src/utils/utils_tree.c \
-					src/main.c
+					src/utils/utils_token.c \
+					src/utils/utils_tree.c
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)

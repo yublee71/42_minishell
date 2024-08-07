@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:59:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:35:53 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,38 @@ t_list	*parser(char *cmd, char **env)
 		exit(EXIT_FAILURE);
 	}
 	token_list = tokenizer(cmd);
-	if (post_syntax_validation(token_list) < 0)
+	if (post_syntax_validation(token_list) < 0) //TODO
 	{
 		free(cmd);
 		ft_lstclear(&token_list, free);
 		write(2, "Syntax error\n", ft_strlen("Syntax error\n"));
 		exit(EXIT_FAILURE);
 	}
-	expand_env_var(token_list, env);
-	ft_lstiter(token_list, remove_quotes);
+	expand_env_var(token_list, env); //TODO
+	ft_lstiter(token_list, remove_quotes); //TODO
 	return (token_list);
 }
 
 //gcc -L../../lib/ft -Wall -Wextra -Werror *.c -lft
 
-int	main(int argc, char **argv, char **env)
-{
-	char	*cmd;
-	t_list	*token_list;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	char	*cmd;
+// 	t_list	*token_list;
 
-	(void)argc;
-	(void)env;
-	if (argv[1])
-	{
-		cmd = ft_strdup(argv[1]);
-		if (!cmd)
-			exit(EXIT_FAILURE);
+// 	(void)argc;
+// 	(void)env;
+// 	if (argv[1])
+// 	{
+// 		cmd = ft_strdup(argv[1]);
+// 		if (!cmd)
+// 			exit(EXIT_FAILURE);
 
-		token_list = parser(cmd, env);
+// 		token_list = parser(cmd, env);
 
-		ft_lstiter(token_list, print_token);
+// 		ft_lstiter(token_list, print_token);
 
-		free(cmd);
-		ft_lstclear(&token_list, free_token);
-	}
-}
+// 		free(cmd);
+// 		ft_lstclear(&token_list, free_token);
+// 	}
+// }

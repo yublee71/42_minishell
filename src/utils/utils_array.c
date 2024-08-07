@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:41:06 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/06 20:27:21 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:43:57 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	array_size(void **arr)
 	return (i);
 }
 
-t_list	**array_to_list(void **arr)
+t_list	*array_to_list(void **arr)
 {
 	t_list	*head;
 	t_list	*new;
@@ -33,21 +33,16 @@ t_list	**array_to_list(void **arr)
 	if (!arr)
 		return (NULL);
 	i = 0;
-	if (arr[i])
-	{
-		head = ft_lst_new((void *)arr[i++]);
-		if (!head)
-			exit(EXIT_FAILURE);
-	}
+	head = NULL;
 	while (arr[i])
 	{
-		new = ft_lst_new((void *)arr[i]);
+		new = ft_lstnew((void *)arr[i]);
 		if (!new)
 			exit(EXIT_FAILURE);
 		ft_lstadd_back(&head, new);
 		i++;
 	}
-	return (&head);
+	return (head);
 }
 
 void	free_array(void **arr)

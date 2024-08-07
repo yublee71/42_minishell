@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:33:29 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:41:04 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,8 @@ typedef struct s_token
 	t_token_type	type;
 }	t_token;
 
-//syntax check
-void	syntax_validation(char *str);
-
-//create tree
-void	expand_tree_pipe(t_btree *root);
-void	expand_tree_redirect(t_btree *root);
-char	*ft_leftoverdup(char *str, char *str_sub, char c);
-char	*ft_worddup(char *str, char c);
-
-//create command list
-t_list	*get_cmds(t_btree *root);
+//parser
+t_list	*parser(char *cmd, char **env);
 
 //pipex
 void	pipex(t_list **cmd_list, t_btree *root, char **env);
@@ -85,8 +76,12 @@ void	btree_apply_infix(t_btree *root, void (*applyf)(void *));
 void	btree_apply_suffix(t_btree *root, void (*applyf)(t_btree *));
 
 //str utils
-char	**ft_split_except_quoted_part(char *s, char c);
+char	**ft_split_except_quoted_part(char *s, char *s_sub, char c);
 void	ft_strtrim_and_free(t_btree *root);
+
+//token utils
+void	free_token(void *content);
+void	print_token(void *content);
 
 //utils
 void	free_before_exit(t_info	info);

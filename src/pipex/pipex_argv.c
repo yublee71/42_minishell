@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:40:12 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/05 22:27:32 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:04:25 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	**get_argv(char *str, char **env)
 	i = 0;
 	while (argv[i])
 		i++;
-	argv_type = (char **)malloc(sizeof(char *)*(i + 1));
+	argv_type = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (!ft_strnstr(env[i], "PATH=", 5))
 		i++;
