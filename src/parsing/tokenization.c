@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:26:10 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:36:12 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:00:28 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static size_t	handle_operator(t_list **token_list, char *cmd)
 	size_t	cnt;
 
 	cnt = 1;
-	if(*cmd == '<')
+	if (*cmd == '<')
 	{
 		if (*(++cmd) == '<' && cnt++)
 			add_token(ft_strdup("<<"), TK_HEREDOC, token_list);
@@ -54,14 +54,14 @@ static size_t	handle_operator(t_list **token_list, char *cmd)
 	return (cnt);
 }
 
-
 static size_t	handle_word(t_list **token_list, char *masked_cmd, char *cmd)
 {
 	char	*value;
 	size_t	i;
 
 	i = 0;
-	while (masked_cmd[i] && !ft_isspace(masked_cmd[i]) && !ft_isoperater(masked_cmd[i]))
+	while (masked_cmd[i] && !ft_isspace(masked_cmd[i])
+		&& !ft_isoperater(masked_cmd[i]))
 		i++;
 	value = ft_strndup(cmd, i);
 	if (masked_cmd[0] == '\'')

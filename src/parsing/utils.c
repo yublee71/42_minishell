@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 01:19:29 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:36:02 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:01:22 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ void	free_token(void *content)
 void	print_token(void *content)
 {
 	t_token			*token;
-	const char		*type_names[8] = {"WORD", "PIPE", "INPUT", "OUTPUT", "APPEND", "HEREDOC", "SQUOTE", "DQUOTE"};
+	const char		*type_names[8] = {
+		"WORD", "PIPE", "INPUT", "OUTPUT", "APPEND",
+		"HEREDOC", "SQUOTE", "DQUOTE"};
 	int				type;
 	int				type_val;
 	int				i;

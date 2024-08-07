@@ -6,14 +6,14 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:27:36 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:37:35 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:03:23 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSING_H
+# define PARSING_H
 
-#include "../../include/minishell.h"
+# include "../../include/minishell.h"
 
 //main
 int		pre_syntax_validation(char *cmd);

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:29:22 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 01:59:04 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,3 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&token_list, free_token);
 	}
 }
-
