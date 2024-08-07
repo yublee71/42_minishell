@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:41:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/08 00:16:49 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ typedef enum e_token_type
 	TK_OUTPUT = 1 << 3,
 	TK_APPEND = 1 << 4,
 	TK_HEREDOC = 1 << 5,
-	TK_SQUOTE = 1 << 6,
-	TK_DQUOTE = 1 << 7
 }	t_token_type;
 
 typedef struct s_token

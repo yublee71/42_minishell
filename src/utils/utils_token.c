@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 02:31:29 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:32:24 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/08 00:26:38 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	free_token(void *content)
 void	print_token(void *content)
 {
 	t_token			*token;
-	const char		*type_names[8] = {
+	const char		*type_names[7] = {
 		"WORD", "PIPE", "INPUT", "OUTPUT", "APPEND",
-		"HEREDOC", "SQUOTE", "DQUOTE"};
+		"HEREDOC", "NA"};
 	int				type;
 	int				type_val;
 	int				i;
 
 	token = (t_token *)content;
-	ft_printf("val: \"%s\"\n", token->value);
+	ft_printf("val: [%s]\n", token->value);
 	type = token->type;
 	i = 0;
 	type_val = 1;
-	while (!(type == type_val))
+	while (!(type == type_val) && i < 7)
 	{
 		type_val = type_val << 1;
 		i++;

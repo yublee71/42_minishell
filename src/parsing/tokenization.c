@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:26:10 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:00:28 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/08 00:33:51 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,7 @@ static size_t	handle_word(t_list **token_list, char *masked_cmd, char *cmd)
 		&& !ft_isoperater(masked_cmd[i]))
 		i++;
 	value = ft_strndup(cmd, i);
-	if (masked_cmd[0] == '\'')
-		add_token(value, TK_SQUOTE, token_list);
-	else if (masked_cmd[0] == '"')
-		add_token(value, TK_DQUOTE, token_list);
-	else
-		add_token(value, TK_WORD, token_list);
+	add_token(value, TK_WORD, token_list);
 	return (i);
 }
 
