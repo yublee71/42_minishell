@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/28 17:40:38 by abelov            #+#    #+#              #
-#    Updated: 2024/08/01 23:27:55 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/06 23:34:09 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FILES   = ft_strcat.c \
 			ft_strmapi.c \
 			ft_strncat.c \
 			ft_strncmp.c \
+			ft_strndup.c \
 			ft_strnstr.c \
 			ft_strrchr.c \
 			ft_strtrim.c \
