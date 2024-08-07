@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:56:28 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/12 17:45:12 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/07 01:32:04 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	*ft_copytil(char *s, char *s_sub, char c)
 	return (result);
 }
 
-char	**ft_split_str_with_quotes(char *s, char c)
+char	**ft_split_except_quoted_part(char *s, char c)
 {
 	char	*s_sub;
 	size_t	i;
@@ -76,7 +76,7 @@ char	**ft_split_str_with_quotes(char *s, char c)
 
 	if (!s)
 		return (NULL);
-	s_sub = mask_quoted_part(s, c);
+	s_sub = mask_quoted_part(s);
 	result = (char **)malloc((ft_wordcount(s_sub, c) + 1) * sizeof(char *));
 	if (!result)
 		exit(EXIT_FAILURE);
@@ -96,31 +96,3 @@ char	**ft_split_str_with_quotes(char *s, char c)
 	return (result);
 }
 
-char	*mask_quoted_part(char *s, char c)
-{
-	char	*s_tmp;
-	size_t	i;
-	char	quote;
-	char	c_sub;
-
-	s_tmp = ft_strdup(s);
-	if (!s_tmp)
-		exit(EXIT_FAILURE);
-	i = 0;
-	c_sub = c + 1;
-	if (!c_sub)
-		c_sub++;
-	while (s[i])
-	{
-		if (s[i] == '\'' || s[i] == '"')
-		{
-			quote = s[i];
-			s_tmp[i] = c_sub;
-			while (s[++i] && s[i] != quote)
-				s_tmp[i] = c_sub;
-			s_tmp[i] = c_sub;
-		}
-		i++;
-	}
-	return (s_tmp);
-}

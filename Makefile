@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/01 18:20:09 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/07 01:43:03 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,20 +24,22 @@ LIBFT_LIB		=  $(LIBFT_DIR)/libft.a
 LIBS			:= $(LIBFT)
 LINK_FLAGS		:= -L $(LIBFT_DIR) -lft
 
-SRCS			= src/main.c \
-                  	src/validation/syntax_validation.c \
-                  	src/parsing/parsing_pipe.c \
-                  	src/parsing/parsing_redirection.c \
-                  	src/parsing/parsing_redirection_utils.c \
-                  	src/parsing/parsing_tree_to_lst.c \
-                  	src/pipex/pipex_main.c \
-                  	src/pipex/pipex_child_process.c \
-                  	src/pipex/pipex_io.c \
-                  	src/pipex/pipex_argv.c \
-                  	src/utils/utils_str.c \
-                  	src/utils/utils_tree.c \
-                  	src/utils/utils_lst.c \
-                  	src/utils/utils.c
+SRCS			= \
+					src/parsing/expansion.c \
+					src/parsing/main.c \
+					src/parsing/post_syntax_validation.c \
+					src/parsing/pre_syntax_validation.c \
+					src/parsing/tokenization.c \
+					src/parsing/utils.c \
+					src/pipex/pipex_argv.c \
+					src/pipex/pipex_child_process.c \
+					src/pipex/pipex_io.c \
+					src/pipex/pipex_main.c \
+					src/utils/utils_array.c \
+					src/utils/utils.c \
+					src/utils/utils_str.c \
+					src/utils/utils_tree.c \
+					src/main.c
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)

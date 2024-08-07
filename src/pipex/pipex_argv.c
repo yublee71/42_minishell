@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:40:12 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/11 17:58:00 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/05 22:27:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**get_argv(char *str, char **env)
 	int		i;
 	int		fd;// only for test
 
-	argv = ft_split_str_with_quotes(str, ' ');
+	argv = ft_split_except_quoted_part(str, ' ');
 	i = 0;
 	while (argv[i])
 		i++;
