@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:57:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 01:29:41 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/08 00:38:07 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ static int	balance_check(char *str)
 
 int	pre_syntax_validation(char *cmd)
 {
-	return (first_char(cmd) == '|' || balance_check(cmd) < 0);
+	if (first_char(cmd) == '|' || balance_check(cmd) < 0)
+		return (-1);
+	return (0);
 }
