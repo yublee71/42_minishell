@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/10 02:20:23 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:18:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	child_process(int i, t_list *current, t_info info)
 {
-	t_btree	*cmd;
+	t_ast	*cmd;
 	char	*cmd_str;
 	char	*tmp;
 	char	**argv;
 
-	cmd = (t_btree *)current->content;
+	cmd = (t_ast *)current->content;
 	get_input(cmd, i, info);
 	get_output(cmd, i, info);
 	cmd_str = cmd->item;

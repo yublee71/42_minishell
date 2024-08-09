@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_main.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/09 02:39:43 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:18:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static t_info	get_info(t_list **cmd_list, t_btree *root, char **env)
-{
-	t_info	info;
-
-	info.env = env;
-	info.cmd_cnt = ft_lstsize(*cmd_list);
-	info.cmd_list = cmd_list;
-	info.root = root;
-	return (info);
-}
 
 static int	**create_pipeline(int cnt)
 {
@@ -52,10 +41,10 @@ static int	**create_pipeline(int cnt)
 
 static int	wait_if_heredoc(void *content)
 {
-	t_btree	*tmp;
+	t_ast	*tmp;
 	char	*str;
 
-	tmp = (t_btree *)content;
+	tmp = (t_ast *)content;
 	tmp = tmp->left;
 	while (tmp)
 	{
@@ -97,13 +86,11 @@ static void	exec_pipex(t_info info, t_list **cmd_list, int *status)
 		;
 }
 
-void	pipex(t_list **cmd_list, t_btree *root, char **env)
+void	pipex(t_list **cmd_list, t_ast *root, char **env)
 {
-	t_info	info;
 	int		status;
 
 	status = 0;
-	info = get_info(cmd_list, root, env);
 	info.fds = create_pipeline(info.cmd_cnt - 1);
 	exec_pipex(info, cmd_list, &status);
 	exit(WEXITSTATUS(status));

@@ -6,23 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:56:28 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:41:16 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 02:37:34 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_strtrim_and_free(t_btree *root)
-{
-	char	*result;
-
-	if (ft_strlen(root->item) > 0)
-	{
-		result = ft_strtrim(root->item, " ");
-		free(root->item);
-		root->item = result;
-	}
-}
 
 static size_t	ft_wordcount(char *s, char c)
 {

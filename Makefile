@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/07 02:34:09 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/09 02:41:22 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LINK_FLAGS		:= -L $(LIBFT_DIR) -lft
 
 SRCS			= \
 					src/main.c \
+					src/parsing/build_tree.c \
 					src/parsing/expansion.c \
 					src/parsing/main.c \
 					src/parsing/post_syntax_validation.c \

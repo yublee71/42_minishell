@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:49:30 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:42:23 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	main(int argc, char **argv, char **env)
 {
 	char	*cmd;
-	t_list	*token_list;
+	// t_list	*token_list;
+	// t_info	*info;
+	t_ast	*root;
 
 	(void)argc;
 	(void)env;
@@ -26,16 +28,22 @@ int	main(int argc, char **argv, char **env)
 		if (!cmd)
 			exit(EXIT_FAILURE);
 
-		token_list = parser(cmd, env);
+		// token_list = parser(cmd, env);
+		root = parser(cmd, env);
 
+		tree_apply_infix(root, tree_print_node);
 		// print list to check
-		ft_lstiter(token_list, print_token);
+		// ft_lstiter(token_list, print_token);
 
+		// init_executor()
 		// pass cmd list to pipex
 		// pipex(&token_list, env);
 
 		//free only when testing
-		ft_lstclear(&token_list, free_token);
+		tree_apply_suffix(root, tree_free_node);
+		// ft_lstclear(token_list, free_token);
 		free(cmd);
 	}
 }
+
+//free: cmd, root

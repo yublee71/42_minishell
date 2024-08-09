@@ -6,15 +6,16 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:35:53 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:44:31 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_list	*parser(char *cmd, char **env)
+t_ast	*parser(char *cmd, char **env)
 {
 	t_list	*token_list;
+	t_ast	*root;
 
 	if (pre_syntax_validation(cmd) < 0)
 	{
@@ -32,29 +33,9 @@ t_list	*parser(char *cmd, char **env)
 	}
 	expand_env_var(token_list, env); //TODO
 	ft_lstiter(token_list, remove_quotes); //TODO
-	return (token_list);
+	root = build_tree(token_list);
+	ft_lstclear(&token_list, free);
+	return (root);
 }
-
 //gcc -L../../lib/ft -Wall -Wextra -Werror *.c -lft
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	char	*cmd;
-// 	t_list	*token_list;
-
-// 	(void)argc;
-// 	(void)env;
-// 	if (argv[1])
-// 	{
-// 		cmd = ft_strdup(argv[1]);
-// 		if (!cmd)
-// 			exit(EXIT_FAILURE);
-
-// 		token_list = parser(cmd, env);
-
-// 		ft_lstiter(token_list, print_token);
-
-// 		free(cmd);
-// 		ft_lstclear(&token_list, free_token);
-// 	}
-// }

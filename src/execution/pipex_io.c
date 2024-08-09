@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:05:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:18:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ static void	open_output(void *item, t_info info)
 	close(fd_output);
 }
 
-void	get_input(t_btree *cmd, int i, t_info info)
+void	get_input(t_ast *cmd, int i, t_info info)
 {
-	t_btree	*current;
+	t_ast	*current;
 
 	if (i != 0)
 	{
@@ -97,9 +97,9 @@ void	get_input(t_btree *cmd, int i, t_info info)
 	}
 }
 
-void	get_output(t_btree *cmd, int i, t_info info)
+void	get_output(t_ast *cmd, int i, t_info info)
 {
-	t_btree	*current;
+	t_ast	*current;
 
 	if (i != info.cmd_cnt - 1)
 	{

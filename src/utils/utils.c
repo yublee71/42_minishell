@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:19 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/07 02:41:49 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:33:50 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_before_exit(t_info	info)
 	// if (info.cmd_list)
 	// 	ft_lstclear(info.cmd_list, del);
 	if (info.root)
-		btree_apply_suffix(info.root, free_node);
+		tree_apply_suffix(info.root, tree_free_node);
 }
 
 void	exit_with_message(char *str, int exit_no, t_info info)

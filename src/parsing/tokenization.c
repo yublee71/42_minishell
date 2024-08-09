@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:26:10 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/08 00:33:51 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 04:53:44 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ static size_t	handle_operator(t_list **token_list, char *cmd)
 	if (*cmd == '<')
 	{
 		if (*(++cmd) == '<' && cnt++)
-			add_token(ft_strdup("<<"), TK_HEREDOC, token_list);
+			add_token("<<", TK_HEREDOC, token_list);
 		else
-			add_token(ft_strdup("<"), TK_INPUT, token_list);
+			add_token("<", TK_INPUT, token_list);
 	}
 	else if (*cmd == '>')
 	{
 		if (*(++cmd) == '>' && cnt++)
-			add_token(ft_strdup(">>"), TK_APPEND, token_list);
+			add_token(">>", TK_APPEND, token_list);
 		else
-			add_token(ft_strdup(">"), TK_OUTPUT, token_list);
+			add_token(">", TK_OUTPUT, token_list);
 	}
 	else
 		add_token(ft_strdup("|"), TK_PIPE, token_list);
