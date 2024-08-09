@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:26:10 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 04:53:44 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/09 19:59:06 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static size_t	handle_operator(t_list **token_list, char *cmd)
 			add_token(">", TK_OUTPUT, token_list);
 	}
 	else
-		add_token(ft_strdup("|"), TK_PIPE, token_list);
+		add_token("|", TK_PIPE, token_list);
 	return (cnt);
 }
 
