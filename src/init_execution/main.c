@@ -6,25 +6,72 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 23:32:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 04:18:32 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 18:24:38 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init.h"
 
-static t_info	get_info(t_list **cmd_list, t_ast *root, char **env)
+static int	**create_pipeline(int cnt)
 {
-	t_info	info;
+	int	**fds;
+	int	i;
 
-	info.env = env;
-	info.cmd_cnt = ft_lstsize(*cmd_list);
-	info.cmd_list = cmd_list;
-	info.root = root;
-	return (info);
+	if (!cnt)
+		return (NULL);
+	fds = (int **)malloc(cnt * sizeof(int *));
+	if (!fds)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (i < cnt)
+	{
+		fds[i] = malloc(2 * sizeof(int));
+		if (!fds[i])
+		{
+			free_array_until((void **)fds, i);
+			exit(EXIT_FAILURE);
+		}
+		if (pipe(fds[i]) < 0)
+		{
+			free_array_until((void **)fds, i + 1);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	return (fds);
 }
 
-t_info	init_executor()
+static int	count_pipe(t_ast *root)
 {
-	
+	int		cnt;
+	t_ast	*current;
 
+	if (!root)
+		return (-1);
+	cnt = 0;
+	if (root->type == TK_PIPE)
+	{
+		cnt++;
+		current = root->right;
+		while (current && current->type == TK_PIPE)
+		{
+			cnt++;
+			current = current->right;
+		}
+	}
+	return (cnt);
+}
+
+
+t_info	init_executor(t_ast *root, char **env)
+{
+	t_info	info;
+	int		pipe_cnt;
+
+	info.env = env;
+	info.root = root;
+	pipe_cnt = count_pipe(root);
+	info.cmd_cnt = pipe_cnt + 1;
+	info.fds = create_pipeline(pipe_cnt);
+	return (info);
 }

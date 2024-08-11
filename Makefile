@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/09 02:41:22 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/11 18:23:30 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,15 +33,16 @@ SRCS			= \
 					src/parsing/pre_syntax_validation.c \
 					src/parsing/tokenization.c \
 					src/parsing/utils.c \
-					src/pipex/pipex_argv.c \
-					src/pipex/pipex_child_process.c \
-					src/pipex/pipex_io.c \
-					src/pipex/pipex_main.c \
+					src/init_execution/main.c \
+					src/execution/main.c \
+					src/execution/path.c \
+					src/execution/io.c \
+					src/execution/child_process.c \
+					src/execution/utils.c \
 					src/utils/utils_array.c \
-					src/utils/utils.c \
-					src/utils/utils_str.c \
 					src/utils/utils_token.c \
-					src/utils/utils_tree.c
+					src/utils/utils_tree.c \
+					# src/utils/utils_str.c \
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)

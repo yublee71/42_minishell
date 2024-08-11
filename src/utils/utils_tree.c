@@ -6,13 +6,13 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:56:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 20:03:59 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 16:21:41 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tree_print_node(t_ast *node)
+void	ast_print_node(t_ast *node)
 {
 	const char		*type_names[8] = {
 		"WORD", "PIPE", "INPUT", "OUTPUT", "APPEND",
@@ -42,7 +42,7 @@ void	tree_print_node(t_ast *node)
 	}
 }
 
-void	tree_free_node(t_ast *node)
+void	ast_free_node(t_ast *node)
 {
 	if (node->type == TK_WORD || node->type == TK_FILE)
 	{
@@ -81,20 +81,20 @@ t_ast	*ast_new_node(t_token *token)
 	return (node);
 }
 
-void	tree_apply_infix(t_ast *node, void (*applyf)(t_ast *))
+void	ast_apply_infix(t_ast *node, void (*applyf)(t_ast *))
 {
 	if (node == NULL)
 		return ;
-	tree_apply_infix(node->left, applyf);
+	ast_apply_infix(node->left, applyf);
 	applyf(node);
-	tree_apply_infix(node->right, applyf);
+	ast_apply_infix(node->right, applyf);
 }
 
-void	tree_apply_suffix(t_ast *node, void (*applyf)(t_ast *))
+void	ast_apply_suffix(t_ast *node, void (*applyf)(t_ast *))
 {
 	if (node == NULL)
 		return ;
-	tree_apply_suffix(node->left, applyf);
-	tree_apply_suffix(node->right, applyf);
+	ast_apply_suffix(node->left, applyf);
+	ast_apply_suffix(node->right, applyf);
 	applyf(node);
 }

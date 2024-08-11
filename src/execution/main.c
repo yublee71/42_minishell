@@ -6,92 +6,69 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 04:18:32 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 18:33:06 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
-static int	**create_pipeline(int cnt)
-{
-	int	**fds;
-	int	i;
-
-	fds = (int **)malloc(cnt * sizeof(int *));
-	if (!fds)
-		exit(EXIT_FAILURE);
-	i = 0;
-	while (i < cnt)
-	{
-		fds[i] = malloc(2 * sizeof(int));
-		if (!fds[i])
-		{
-			free_fds(fds, i);
-			exit(EXIT_FAILURE);
-		}
-		if (pipe(fds[i]) < 0)
-		{
-			free_fds(fds, i + 1);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
-	return (fds);
-}
-
-static int	wait_if_heredoc(void *content)
+static int	wait_if_heredoc(t_ast *cmd_node)
 {
 	t_ast	*tmp;
-	char	*str;
 
-	tmp = (t_ast *)content;
-	tmp = tmp->left;
+	tmp = cmd_node->left;
 	while (tmp)
 	{
-		str = (char *)tmp->item;
-		if (str && str[0] == '<' && str[1] == '<')
-			return (-1);
+		if (tmp->type == TK_HEREDOC)
+			return (1);
 		tmp = tmp->left;
 	}
 	return (0);
 }
 
-static void	exec_pipex(t_info info, t_list **cmd_list, int *status)
+static void	exec_pipex(t_ast *root, t_info *info, int *status)
 {
 	int		i;
 	pid_t	pid;
-	t_list	*current;
+	t_ast	*current;
+	t_ast	*cmd_node;
 
 	i = -1;
-	current = *cmd_list;
-	while (info.cmd_cnt && ++i < info.cmd_cnt)
+	current = root;
+	while (info->cmd_cnt && ++i < info->cmd_cnt)
 	{
+		if (current->type == TK_PIPE)
+			cmd_node = current->left;
+		else
+			cmd_node = current;
 		pid = fork();
 		if (pid < 0)
 			exit_with_message("fork", EXIT_FAILURE, info);
-		if (wait_if_heredoc(current->content))
+		if (wait_if_heredoc(cmd_node))
 			waitpid(pid, status, 0);
 		sleep(1); //only for test
 		if (pid == 0)
-			child_process(i, current, info);
+			child_process(i, cmd_node, info);
 		if (i != 0)
-			close(info.fds[i - 1][READ_END]);
-		if (i != info.cmd_cnt - 1)
-			close(info.fds[i][WRITE_END]);
-		current = current->next;
+			close(info->fds[i - 1][READ_END]);
+		if (i != info->cmd_cnt - 1)
+			close(info->fds[i][WRITE_END]);
+		current = current->right;
 	}
 	waitpid(pid, status, 0);
-	free_before_exit(info);
 	while (wait(NULL) != -1)
 		;
 }
 
-void	pipex(t_list **cmd_list, t_ast *root, char **env)
+void	executor(t_ast *root, t_info *info)
 {
 	int		status;
 
 	status = 0;
-	info.fds = create_pipeline(info.cmd_cnt - 1);
-	exec_pipex(info, cmd_list, &status);
+	if (info->cmd_cnt == 1)
+		child_process(-1, root, info);
+	else
+		exec_pipex(root, info, &status);
+	free_before_exit(info);
 	exit(WEXITSTATUS(status));
 }

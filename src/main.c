@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 04:42:23 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 18:14:31 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*cmd;
-	// t_list	*token_list;
-	// t_info	*info;
+	t_info	info;
 	t_ast	*root;
 
 	(void)argc;
@@ -24,26 +22,16 @@ int	main(int argc, char **argv, char **env)
 	open("args.txt", O_TRUNC | O_CREAT, 0777); //only for test
 	if (argv[1])
 	{
-		cmd = ft_strdup(argv[1]);
-		if (!cmd)
-			exit(EXIT_FAILURE);
+		root = parser(argv[1], env);//env needs to be modified
+		// ast_apply_infix(root, ast_print_node);
 
-		// token_list = parser(cmd, env);
-		root = parser(cmd, env);
+		info = init_executor(root, env);
+		// printf("%d\n", info.cmd_cnt);
 
-		tree_apply_infix(root, tree_print_node);
-		// print list to check
-		// ft_lstiter(token_list, print_token);
-
-		// init_executor()
-		// pass cmd list to pipex
-		// pipex(&token_list, env);
+		executor(root, &info);
 
 		//free only when testing
-		tree_apply_suffix(root, tree_free_node);
-		// ft_lstclear(token_list, free_token);
-		free(cmd);
+		// free_array_until((void **)info.fds, info.cmd_cnt - 1);
+		// ast_apply_suffix(root, ast_free_node);
 	}
 }
-
-//free: cmd, root

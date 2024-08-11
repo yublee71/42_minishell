@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:41:06 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 05:01:44 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 18:20:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,30 @@ void	free_array(void **arr)
 	int	i;
 
 	if (!arr)
-		return;
+		return ;
 	i = 0;
 	while (arr[i])
 	{
 		free(arr[i]);
 		arr[i] = NULL;
 		i++;
+	}
+	free(arr);
+	arr = NULL;
+}
+
+void	free_array_until(void **arr, int i)
+{
+	int	j;
+
+	j = 0;
+	if (!arr)
+		return ;
+	while (j < i && arr[j])
+	{
+		free(arr[j]);
+		arr[j] = NULL;
+		j++;
 	}
 	free(arr);
 	arr = NULL;

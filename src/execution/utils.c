@@ -6,23 +6,21 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:19 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 04:33:50 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 18:23:53 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
-void	free_before_exit(t_info	info)
+void	free_before_exit(t_info	*info)
 {
-	if (info.fds)
-		free_fds(info.fds, info.cmd_cnt - 1);
-	// if (info.cmd_list)
-	// 	ft_lstclear(info.cmd_list, del);
-	if (info.root)
-		tree_apply_suffix(info.root, tree_free_node);
+	if (info->fds)
+		free_array_until((void **)info->fds, info->cmd_cnt - 1);
+	if (info->root)
+		ast_apply_suffix(info->root, ast_free_node);
 }
 
-void	exit_with_message(char *str, int exit_no, t_info info)
+void	exit_with_message(char *str, int exit_no, t_info *info)
 {
 	if (str)
 	{
@@ -30,34 +28,12 @@ void	exit_with_message(char *str, int exit_no, t_info info)
 		{
 			write(2, str, ft_strlen(str));
 			write(2, ": command not found\n", 20);
-			free(str);
 		}
 		else
 			perror(str);
 	}
 	free_before_exit(info);
 	exit(exit_no);
-}
-
-void	free_str_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-int	free_fds(int **fds, int i)
-{
-	int	j;
-
-	j = 0;
-	while (j < i)
-		free(fds[j++]);
-	free(fds);
-	return (1);
 }
 
 void	add_random_str_to_str(char *buf, size_t buf_size, char *str, size_t rand_cnt)

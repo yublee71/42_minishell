@@ -6,12 +6,40 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 03:35:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/11 16:56:04 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// static char	*remove_paired_quotes(char *str)
+// {
+// 	char	*new;
+// 	char	quote;
+// 	size_t	i;
+// 	size_t	j;
+
+// 	new = ft_strdup(str);
+// 	if (!new)
+// 		exit(EXIT_FAILURE);
+// 	i = 0;
+// 	j = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '\'' || str[i] == '"')
+// 		{
+// 			quote = str[i++];
+// 			while (str[i] != quote)
+// 				new[j++] = str[i++];
+// 			i++;
+// 		}
+// 		else
+// 			new[j++] = str[i++];
+// 	}
+// 	while (j < ft_strlen(str) + 1)
+// 		new[j++] = 0;
+// 	return (new);
+// }
 static char	*expand_if_dollar_sign(char *value, char **env)
 {
 	(void)env;
