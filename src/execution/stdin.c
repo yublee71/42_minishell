@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 23:50:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 00:03:53 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,10 @@ static void	add_random_str_to_str(char *buf, size_t size, char *s, size_t rand)
 	ft_strncat(buf, random_code, rand);
 }
 
-static void	read_til_delimiter(char *delimiter, t_info *info)
+static void	write_until_delimiter(int tty_fd, int new_fd, char *delimiter)
 {
 	char	*buf;
-	int		tty_fd;
-	int		new_fd;
-	char	filename[FILENAME_MAX];
 
-	ft_memset(filename, 0, FILENAME_MAX);
-	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
-	tty_fd = open("/dev/tty", O_RDONLY);
-	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	if (tty_fd < 0 || new_fd < 0)
-		exit_with_message("open", EXIT_FAILURE, info);
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -60,6 +51,21 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 		free(buf);
 	}
 	free(buf);
+}
+
+static void	handle_heredoc_input(char *delimiter, t_info *info)
+{
+	int		tty_fd;
+	int		new_fd;
+	char	filename[FILENAME_MAX];
+
+	ft_memset(filename, 0, FILENAME_MAX);
+	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
+	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
+	tty_fd = open("/dev/tty", O_RDONLY);
+	if (tty_fd < 0 || new_fd < 0)
+		exit_with_message("open", EXIT_FAILURE, info);
+	write_until_delimiter(tty_fd, new_fd, delimiter);
 	new_fd = open(filename, O_RDWR);
 	if (new_fd < 0)
 		exit_with_message("open", EXIT_FAILURE, info);
@@ -68,7 +74,7 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	close(tty_fd);
 	close(new_fd);
 	unlink(filename);
-} //TODO: refactor with readline
+}
 
 static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 {
@@ -78,7 +84,7 @@ static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 	file_node = in_node->left;
 	fd_input = -1;
 	if (in_node->type == TK_HEREDOC)
-		read_til_delimiter(file_node->value, info);
+		handle_heredoc_input(file_node->value, info);
 	else if (in_node->type == TK_INPUT)
 	{
 		fd_input = open(file_node->value, O_RDONLY);
