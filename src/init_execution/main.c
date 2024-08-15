@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 23:32:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:00:36 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 23:46:48 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	**create_pipeline(int cnt)
 	int	**fds;
 	int	i;
 
-	if (!cnt)
+	if (cnt <= 0)
 		return (NULL);
 	fds = (int **)malloc(cnt * sizeof(int *));
 	if (!fds)
