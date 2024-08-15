@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 14:34:51 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:40:42 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	close(tty_fd);
 	close(new_fd);
 	unlink(filename);
-}
+} //TODO: refactor with readline
 
 static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 {
