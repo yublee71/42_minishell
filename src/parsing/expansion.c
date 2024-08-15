@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/11 16:56:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:26:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@
 // }
 static char	*expand_if_dollar_sign(char *value, char **env)
 {
-	(void)env;
 	char	*str;
 
+	(void)env;
 	if (!ft_strchr(value, '$'))
 	{
 		str = ft_strdup(value);
@@ -53,20 +53,20 @@ static char	*expand_if_dollar_sign(char *value, char **env)
 	}
 	else
 	{
-		str = NULL;//need to change
+		str = NULL;//TODO: create function
 	}
 	return (str);
 }
+
 //mask only single quote
 void	expand_env_var(t_list *token_list, char **env)
 {
 	t_list	*node;
 	t_token	*token;
 	char	*tmp;
-	// char	*str;
 
 	if (!token_list)
-		return;
+		return ;
 	node = token_list;
 	while (node)
 	{

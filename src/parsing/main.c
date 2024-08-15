@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/11 18:36:37 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:26:50 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ t_ast	*parser(char *cmd, char **env)
 	return (root);
 }
 //gcc -L../../lib/ft -Wall -Wextra -Werror *.c -lft
-
