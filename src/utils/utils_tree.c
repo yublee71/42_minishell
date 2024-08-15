@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:56:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/11 16:21:41 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:29:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 void	ast_print_node(t_ast *node)
 {
 	const char		*type_names[8] = {
-		"WORD", "PIPE", "INPUT", "OUTPUT", "APPEND",
-		"HEREDOC", "FILE", NULL};
+		"WORD", "PIPE", "INPUT", "OUTPUT", "APPEND", "HEREDOC", "FILE", NULL};
 	int				type;
 	int				type_val;
 	int				i;
-	char	**args;
+	char			**args;
 
 	ft_printf("val: [%s]\n", node->value);
 	type = node->type;
-	i = 0;
 	type_val = 1;
+	i = 0;
 	while (!(type == type_val) && i < 7)
 	{
 		type_val = type_val << 1;

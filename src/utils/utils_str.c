@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:56:28 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 02:37:34 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:28:29 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ char	**ft_split_except_quoted_part(char *s, char *s_sub, char c)
 	result[i] = NULL;
 	return (result);
 }
-
