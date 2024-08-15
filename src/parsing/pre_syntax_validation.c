@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_validation.c                                :+:      :+:    :+:   */
+/*   pre_syntax_validation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:57:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/06/16 23:41:14 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/08 00:38:07 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 static char	first_char(char *str)
 {
@@ -51,11 +51,9 @@ static int	balance_check(char *str)
 	return (0);
 }
 
-void	syntax_validation(char *str)
+int	pre_syntax_validation(char *cmd)
 {
-	if (first_char(str) == '|' || balance_check(str) < 0)
-	{
-		write(2, "Syntax error\n", ft_strlen("Syntax error\n"));
-		exit(EXIT_FAILURE);
-	}
+	if (first_char(cmd) == '|' || balance_check(cmd) < 0)
+		return (-1);
+	return (0);
 }

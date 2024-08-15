@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/30 16:08:11 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:32:10 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,62 +24,69 @@
 # define READ_END 0
 # define WRITE_END 1
 
-typedef struct s_btree
+typedef enum e_token_type
 {
-	struct s_btree	*left;
-	struct s_btree	*right;
-	void			*item;
-}	t_btree;
+	TK_WORD = 1 << 0,
+	TK_PIPE = 1 << 1,
+	TK_INPUT = 1 << 2,
+	TK_OUTPUT = 1 << 3,
+	TK_APPEND = 1 << 4,
+	TK_HEREDOC = 1 << 5,
+	TK_FILE = 1 << 6,
+}	t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+}	t_token;
+
+typedef struct s_ast
+{
+	struct s_ast	*left;
+	struct s_ast	*right;
+	t_token_type	type;
+	char			*value;
+	char			**args;
+}	t_ast;
 
 typedef struct s_info
 {
 	int		cmd_cnt;
 	char	**env;
 	int		**fds;
-	t_btree	*root;
-	t_list	**cmd_list;
+	t_ast	*root;
 }	t_info;
 
-//syntax check
-void	syntax_validation(char *str);
+//parser
+t_ast	*parser(char *cmd, char **env);
 
-//create tree
-void	expand_tree_pipe(t_btree *root);
-void	expand_tree_redirect(t_btree *root);
-char	*ft_leftoverdup(char *str, char *str_sub, char c);
-char	*ft_worddup(char *str, char c);
+//execution initiation
+t_info	init_executor(t_ast *root, char **env);
 
-//create command list
-t_list	*get_cmds(t_btree *root);
-
-//pipex
-void	pipex(t_list **cmd_list, t_btree *root, char **env);
-void	get_input(t_btree *cmd, int i, t_info info);
-void	get_output(t_btree *cmd, int i, t_info info);
-void	child_process(int i, t_list *current, t_info info);
-char	**get_argv(char *str, char **env);
+//execution
+void	executor(t_ast *root, t_info *info);
 
 //tree utils
-void	print_node(void *item);
-void	free_node(t_btree *root);
-t_btree	*create_node(void *item);
-void	btree_apply_infix(t_btree *root, void (*applyf)(void *));
-void	btree_apply_suffix(t_btree *root, void (*applyf)(t_btree *));
-
-//list utils
-void	del(void *item);
-void	print_list(void *content);
+void	ast_print_node(t_ast *node);
+void	ast_free_node(t_ast *node);
+t_ast	*ast_new_node(t_token *token);
+void	ast_apply_infix(t_ast *node, void (*applyf)(t_ast *));
+void	ast_apply_suffix(t_ast *node, void (*applyf)(t_ast *));
 
 //str utils
-char	**ft_split_str_with_quotes(char *s, char c);
-char	*mask_quoted_part(char *s, char c);
-void	ft_strtrim_and_free(t_btree *root);
+char	**ft_split_except_quoted_part(char *s, char *s_sub, char c);
 
-//utils
-void	free_before_exit(t_info	info);
-void	exit_with_message(char *str, int exit_no, t_info info);
-void	free_str_array(char **array);
-int		free_fds(int **fds, int i);
-void	add_random_str_to_str(char *buf, size_t buf_size, char *str, size_t rand_count);
+//token utils
+void	free_token(void *content);
+void	print_token(void *content);
+
+//array utils
+void	free_array(void **array);
+void	free_array_until(void **array, int i);
+
+//exit
+void	exit_with_message(char *str, int exit_no, t_info *info);
+void	free_before_exit(t_info	*info);
 
 #endif

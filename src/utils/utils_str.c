@@ -6,23 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:56:28 by yublee            #+#    #+#             */
-/*   Updated: 2024/07/12 17:45:12 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:33:05 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	ft_strtrim_and_free(t_btree *root)
-{
-	char	*result;
-
-	if (ft_strlen(root->item) > 0)
-	{
-		result = ft_strtrim(root->item, " ");
-		free(root->item);
-		root->item = result;
-	}
-}
+#include "../../include/minishell.h"
 
 static size_t	ft_wordcount(char *s, char c)
 {
@@ -67,16 +55,14 @@ static char	*ft_copytil(char *s, char *s_sub, char c)
 	return (result);
 }
 
-char	**ft_split_str_with_quotes(char *s, char c)
+char	**ft_split_except_quoted_part(char *s, char *s_sub, char c)
 {
-	char	*s_sub;
 	size_t	i;
 	size_t	j;
 	char	**result;
 
 	if (!s)
 		return (NULL);
-	s_sub = mask_quoted_part(s, c);
 	result = (char **)malloc((ft_wordcount(s_sub, c) + 1) * sizeof(char *));
 	if (!result)
 		exit(EXIT_FAILURE);
@@ -92,35 +78,5 @@ char	**ft_split_str_with_quotes(char *s, char c)
 			j++;
 	}
 	result[i] = NULL;
-	free(s_sub);
 	return (result);
-}
-
-char	*mask_quoted_part(char *s, char c)
-{
-	char	*s_tmp;
-	size_t	i;
-	char	quote;
-	char	c_sub;
-
-	s_tmp = ft_strdup(s);
-	if (!s_tmp)
-		exit(EXIT_FAILURE);
-	i = 0;
-	c_sub = c + 1;
-	if (!c_sub)
-		c_sub++;
-	while (s[i])
-	{
-		if (s[i] == '\'' || s[i] == '"')
-		{
-			quote = s[i];
-			s_tmp[i] = c_sub;
-			while (s[++i] && s[i] != quote)
-				s_tmp[i] = c_sub;
-			s_tmp[i] = c_sub;
-		}
-		i++;
-	}
-	return (s_tmp);
 }

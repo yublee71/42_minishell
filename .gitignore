@@ -10,16 +10,19 @@
 #                                                                              #
 # **************************************************************************** #
 
+#main program
 minishell
 
 #for test
 tester/*
 !tester/minitest.sh
-args.txt
 
 #libraries
 *.a
 
 #object files
 build/
-*.a
+*.o
+
+#executables
+a.out

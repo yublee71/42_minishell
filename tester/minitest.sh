@@ -124,7 +124,7 @@ preset_strings=(
 		"ls -l | nonexist >${out[0]}"
 #case 15
 		"existing command with a wrong directory"
-		"ls -l | /cat -e >${out[0]}"
+		"ls -l | /cat -e >t/${out[0]}"
 	)
 
 #ser variables
@@ -196,12 +196,12 @@ for ((i = starting_num; i<size; i +=2)); do
 
 	valgrind --leak-check=full --show-leak-kinds=all -s --log-file="$dir"/val_case$((i/2 + 1)) ../minishell "$string2"
 
-	if [ -f "$args_file" ]; then
-		printf "${BOLD_GREEN}args:${NC}\n"
-		cat "$args_file"
-	else
-		echo "$args_file does not exist."
-	fi
+	# if [ -f "$args_file" ]; then
+	# 	printf "${BOLD_GREEN}args:${NC}\n"
+	# 	cat "$args_file"
+	# else
+	# 	echo "$args_file does not exist."
+	# fi
 
 	myoutput=false
 	for output_file in "${out[@]}"; do
