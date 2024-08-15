@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:40:42 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 23:50:04 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	add_random_str_to_str(char *buf, size_t size, char *s, size_t rand)
 	ft_strlcpy(buf, s, size);
 	fd = open("/dev/urandom", O_RDONLY);
 	i = 0;
+	ft_memset(random_code, 0, 1024);
 	while (read(fd, tmp_buf, 1) && i < rand)
 		if (ft_isalnum(tmp_buf[0]))
 			random_code[i++] = tmp_buf[0];
@@ -42,6 +43,7 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	int		new_fd;
 	char	filename[FILENAME_MAX];
 
+	ft_memset(filename, 0, FILENAME_MAX);
 	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
 	tty_fd = open("/dev/tty", O_RDONLY);
 	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
@@ -50,8 +52,9 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	while (1)
 	{
 		write(1, "> ", 2);
-		buf = get_next_line(tty_fd); //readline instead?
-		if (!ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
+		buf = get_next_line(tty_fd);
+		if (ft_strlen(buf) - 1 == ft_strlen(delimiter)
+			&& !ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
 			break ;
 		write(new_fd, buf, ft_strlen(buf));
 		free(buf);
@@ -61,7 +64,7 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	if (new_fd < 0)
 		exit_with_message("open", EXIT_FAILURE, info);
 	if (dup2(new_fd, STDIN_FILENO) < 0)
-		exit_with_message("here doc", EXIT_FAILURE, info);
+		exit_with_message("heredoc", EXIT_FAILURE, info);
 	close(tty_fd);
 	close(new_fd);
 	unlink(filename);
