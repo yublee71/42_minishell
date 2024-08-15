@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/15 15:35:08 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/15 21:57:49 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS			= $(MANDATORY_FLAGS) $(DEBUG_FLAGS) $(OPTIMIZE_FLAGS)
 LIBFT_DIR		=  ./lib/ft
 LIBFT_LIB		=  $(LIBFT_DIR)/libft.a
 LIBS			:= $(LIBFT)
-LINK_FLAGS		:= -L $(LIBFT_DIR) -lft
+LINK_FLAGS		:= -L $(LIBFT_DIR) -lft -lreadline
 
 SRCS			= \
 					src/main.c \
@@ -50,7 +50,7 @@ OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(LIBFT_LIB) $(OBJS)
-		$(CC) -L$(LIBFT_DIR) $(OBJS) -g -o $@ -lft
+		$(CC) $(OBJS) -g -o $@ $(LINK_FLAGS)
 
 $(LIBFT_LIB):
 		@$(MAKE) -C $(LIBFT_DIR) -j8

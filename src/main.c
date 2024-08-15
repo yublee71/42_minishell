@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:34:25 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 22:15:10 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,30 @@ int	main(int argc, char **argv, char **env)
 {
 	t_info	info;
 	t_ast	*root;
+	char	*cmd;
 
 	(void)argc;
-	if (argv[1])
+	(void)argv;
+	while (1)
 	{
-		root = parser(argv[1], env);//TODO:env needs to be modified beforehand
-		// ast_apply_infix(root, ast_print_node);
+		cmd = readline("> ");
+		if (cmd)
+		{
+			root = parser(cmd, env);//TODO:env needs to be modified beforehand
+			// ast_apply_infix(root, ast_print_node);
 
-		info = init_executor(root, env);
+			info = init_executor(root, env);
 
-		executor(root, &info);
+			executor(root, &info);
 
-		//free only when testing
-		// free_array_until((void **)info.fds, info.cmd_cnt - 1);
-		// ast_apply_suffix(root, ast_free_node);
+			//free only when testing
+			// free_array_until((void **)info.fds, info.cmd_cnt - 1);
+			// ast_apply_suffix(root, ast_free_node);
+		}
+		else
+			break ;
+		add_history(cmd);
+		free(cmd);
 	}
+	rl_clear_history();
 }

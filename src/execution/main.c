@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 14:58:07 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 22:19:04 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	exec_pipex(t_ast *root, t_info *info, int *status)
 		if (pid < 0)
 			exit_with_message("fork", EXIT_FAILURE, info);
 		wait_if_heredoc(cmd_node, pid, status);
-		sleep(1); //only for test
 		if (pid == 0)
 			child_process(i, cmd_node, info);
 		close_pipe_for_parent(i, info);
@@ -72,10 +71,11 @@ void	executor(t_ast *root, t_info *info)
 	int		status;
 
 	status = 0;
-	if (info->cmd_cnt == 1)
-		child_process(-1, root, info);
-	else
-		exec_pipex(root, info, &status);
+	// if (info->cmd_cnt == 1)
+	// 	child_process(-1, root, info);
+	// else
+	// 	exec_pipex(root, info, &status);
+	exec_pipex(root, info, &status);
 	free_before_exit(info);
-	exit(WEXITSTATUS(status));
+	// exit(WEXITSTATUS(status));//TODO:store status
 }
