@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection_input.c                                :+:      :+:    :+:   */
+/*   stdin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:53 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 14:34:51 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static void	add_random_str_to_str(char *buf, size_t buf_size, char *str, size_t rand_cnt)
+static void	add_random_str_to_str(char *buf, size_t size, char *s, size_t rand)
 {
 	char	random_code[1024];
 	char	tmp_buf[1];
@@ -20,19 +20,19 @@ static void	add_random_str_to_str(char *buf, size_t buf_size, char *str, size_t 
 	size_t	i;
 	int		fd;
 
-	if (rand_cnt + 1 > 1024)
+	if (rand + 1 > 1024)
 		return ;
-	len = ft_strlen(str) + rand_cnt;
-	if (len + 1 > buf_size)
+	len = ft_strlen(s) + rand;
+	if (len + 1 > size)
 		return ;
-	ft_strlcpy(buf, str, buf_size);
+	ft_strlcpy(buf, s, size);
 	fd = open("/dev/urandom", O_RDONLY);
 	i = 0;
-	while (read(fd, tmp_buf, 1) && i < rand_cnt)
+	while (read(fd, tmp_buf, 1) && i < rand)
 		if (ft_isalnum(tmp_buf[0]))
 			random_code[i++] = tmp_buf[0];
 	close(fd);
-	ft_strncat(buf, random_code, rand_cnt);
+	ft_strncat(buf, random_code, rand);
 }
 
 static void	read_til_delimiter(char *delimiter, t_info *info)
@@ -45,11 +45,11 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
 	tty_fd = open("/dev/tty", O_RDONLY);
 	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	if (tty_fd < 0)
-		exit_with_message("tty", EXIT_FAILURE, info);
+	if (tty_fd < 0 || new_fd < 0)
+		exit_with_message("open", EXIT_FAILURE, info);
 	while (1)
 	{
-		write(1,"> ",2);
+		write(1, "> ", 2);
 		buf = get_next_line(tty_fd); //readline instead?
 		if (!ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
 			break ;
@@ -58,6 +58,8 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	}
 	free(buf);
 	new_fd = open(filename, O_RDWR);
+	if (new_fd < 0)
+		exit_with_message("open", EXIT_FAILURE, info);
 	if (dup2(new_fd, STDIN_FILENO) < 0)
 		exit_with_message("here doc", EXIT_FAILURE, info);
 	close(tty_fd);

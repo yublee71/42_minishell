@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection_output.c                               :+:      :+:    :+:   */
+/*   stdout.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:58:50 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 14:08:41 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 14:35:55 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static void		dup_redir_output_to_stdout(t_ast *out_node, t_info *info)
+static void	dup_redir_output_to_stdout(t_ast *out_node, t_info *info)
 {
 	int		fd_output;
 	t_ast	*file_node;
@@ -27,7 +27,6 @@ static void		dup_redir_output_to_stdout(t_ast *out_node, t_info *info)
 		exit_with_message(file_node->value, EXIT_FAILURE, info);
 	close(fd_output);
 }
-
 
 void	set_stdout(int i, t_ast *cmd, t_info *info)
 {
