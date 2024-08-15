@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/11 18:23:30 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/15 14:13:36 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,11 @@ SRCS			= \
 					src/parsing/tokenization.c \
 					src/parsing/utils.c \
 					src/init_execution/main.c \
-					src/execution/main.c \
-					src/execution/path.c \
-					src/execution/io.c \
 					src/execution/child_process.c \
-					src/execution/utils.c \
+					src/execution/main.c \
+					src/execution/stdin.c \
+					src/execution/stdout.c \
+					src/utils/exit.c \
 					src/utils/utils_array.c \
 					src/utils/utils_token.c \
 					src/utils/utils_tree.c \

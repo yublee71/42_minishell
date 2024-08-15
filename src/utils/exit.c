@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 14:59:19 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/11 18:23:53 by yublee           ###   ########.fr       */
+/*   Created: 2024/08/15 12:55:53 by yublee            #+#    #+#             */
+/*   Updated: 2024/08/15 12:56:42 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../../include/minishell.h"
 
 void	free_before_exit(t_info	*info)
 {
@@ -34,27 +34,4 @@ void	exit_with_message(char *str, int exit_no, t_info *info)
 	}
 	free_before_exit(info);
 	exit(exit_no);
-}
-
-void	add_random_str_to_str(char *buf, size_t buf_size, char *str, size_t rand_cnt)
-{
-	char	random_code[1024];
-	char	tmp_buf[1];
-	size_t	len;
-	size_t	i;
-	int		fd;
-
-	if (rand_cnt + 1 > 1024)
-		return ;
-	len = ft_strlen(str) + rand_cnt;
-	if (len + 1 > buf_size)
-		return ;
-	ft_strlcpy(buf, str, buf_size);
-	fd = open("/dev/urandom", O_RDONLY);
-	i = 0;
-	while (read(fd, tmp_buf, 1) && i < rand_cnt)
-		if (ft_isalnum(tmp_buf[0]))
-			random_code[i++] = tmp_buf[0];
-	close(fd);
-	ft_strncat(buf, random_code, rand_cnt);
 }

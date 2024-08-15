@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io.c                                               :+:      :+:    :+:   */
+/*   redirection_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/11 17:45:08 by yublee           ###   ########.fr       */
+/*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
+/*   Updated: 2024/08/15 14:07:53 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static void	add_random_str_to_str(char *buf, size_t buf_size, char *str, size_t rand_cnt)
+{
+	char	random_code[1024];
+	char	tmp_buf[1];
+	size_t	len;
+	size_t	i;
+	int		fd;
+
+	if (rand_cnt + 1 > 1024)
+		return ;
+	len = ft_strlen(str) + rand_cnt;
+	if (len + 1 > buf_size)
+		return ;
+	ft_strlcpy(buf, str, buf_size);
+	fd = open("/dev/urandom", O_RDONLY);
+	i = 0;
+	while (read(fd, tmp_buf, 1) && i < rand_cnt)
+		if (ft_isalnum(tmp_buf[0]))
+			random_code[i++] = tmp_buf[0];
+	close(fd);
+	ft_strncat(buf, random_code, rand_cnt);
+}
 
 static void	read_til_delimiter(char *delimiter, t_info *info)
 {
@@ -42,7 +65,7 @@ static void	read_til_delimiter(char *delimiter, t_info *info)
 	unlink(filename);
 }
 
-static void	open_input(t_ast *in_node, t_info *info)
+static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 {
 	int		fd_input;
 	t_ast	*file_node;
@@ -60,23 +83,7 @@ static void	open_input(t_ast *in_node, t_info *info)
 	}
 }
 
-static void	open_output(t_ast *out_node, t_info *info)
-{
-	int		fd_output;
-	t_ast	*file_node;
-
-	file_node = out_node->right;
-	fd_output = -1;
-	if (out_node->type == TK_OUTPUT)
-		fd_output = open(file_node->value, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	else if (out_node->type == TK_APPEND)
-		fd_output = open(file_node->value, O_WRONLY | O_APPEND | O_CREAT, 0666);
-	if (fd_output < 0 || dup2(fd_output, STDOUT_FILENO) < 0)
-		exit_with_message(file_node->value, EXIT_FAILURE, info);
-	close(fd_output);
-}
-
-void	get_input(int i, t_ast *cmd, t_info *info)
+void	set_stdin(int i, t_ast *cmd, t_info *info)
 {
 	t_ast	*in_node;
 
@@ -90,26 +97,7 @@ void	get_input(int i, t_ast *cmd, t_info *info)
 	in_node = cmd->left;
 	while (in_node)
 	{
-		open_input(in_node, info);
+		dup_redir_input_to_stdin(in_node, info);
 		in_node = in_node->left->left;
-	}
-}
-
-void	get_output(int i, t_ast *cmd, t_info *info)
-{
-	t_ast	*out_node;
-
-	if (i != info->cmd_cnt - 1 && i != -1)
-	{
-		close(info->fds[i][READ_END]);
-		if (dup2(info->fds[i][WRITE_END], STDOUT_FILENO) < 0)
-			exit_with_message("dup2", EXIT_FAILURE, info);
-		close(info->fds[i][WRITE_END]);
-	}
-	out_node = cmd->right;
-	while (out_node)
-	{
-		open_output(out_node, info);
-		out_node = out_node->right->right;
 	}
 }
