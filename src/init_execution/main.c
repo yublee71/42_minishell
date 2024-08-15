@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 23:32:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/11 18:24:38 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:00:36 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	count_pipe(t_ast *root)
 	}
 	return (cnt);
 }
-
 
 t_info	init_executor(t_ast *root, char **env)
 {
