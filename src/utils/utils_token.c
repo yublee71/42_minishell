@@ -6,11 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 02:31:29 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/09 03:15:09 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:33:11 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 void	free_token(void *content)
 {

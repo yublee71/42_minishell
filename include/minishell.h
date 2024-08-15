@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 12:55:32 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:32:10 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	print_token(void *content);
 void	free_array(void **array);
 void	free_array_until(void **array, int i);
 
-//free and exit
+//exit
 void	exit_with_message(char *str, int exit_no, t_info *info);
 void	free_before_exit(t_info	*info);
+
 #endif
