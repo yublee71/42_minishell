@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:32:10 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:52:03 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_token
 	t_token_type	type;
 }	t_token;
 
+//AST: Abstract Syntax Tree
 typedef struct s_ast
 {
 	struct s_ast	*left;
