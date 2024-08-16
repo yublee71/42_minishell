@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 10:41:36 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 16:41:30 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	//TODO: signal
 	while (1)
 	{
 		cmd = readline("minishell$ ");
@@ -28,13 +29,13 @@ int	main(int argc, char **argv, char **env)
 			if (ft_strlen(cmd))
 			{
 				root = parser(cmd, env);//TODO:env needs to be modified beforehand
-				// ast_apply_infix(root, ast_print_node);
+				// ast_apply_infix(root, ast_print_node); //print tree
 
 				info = init_executor(root, env);
 
 				executor(root, &info);
 
-				//free only when testing
+				//free only when testing tree
 				// free_array_until((void **)info.fds, info.cmd_cnt - 1);
 				// ast_apply_suffix(root, ast_free_node);
 			}
