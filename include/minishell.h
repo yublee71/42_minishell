@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 11:00:33 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 16:22:24 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 
 typedef enum e_token_type
 {
-	TK_WORD = 1 << 0,
-	TK_PIPE = 1 << 1,
-	TK_INPUT = 1 << 2,
+	TK_PIPE = 1 << 0,
+	TK_INPUT = 1 << 1,
+	TK_HEREDOC = 1 << 2,
 	TK_OUTPUT = 1 << 3,
 	TK_APPEND = 1 << 4,
-	TK_HEREDOC = 1 << 5,
+	TK_WORD = 1 << 5,
 	TK_FILE = 1 << 6,
 }	t_token_type;
 
