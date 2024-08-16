@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 21:57:27 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 11:00:33 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ void	ast_free_node(t_ast *node);
 t_ast	*ast_new_node(t_token *token);
 void	ast_apply_infix(t_ast *node, void (*applyf)(t_ast *));
 void	ast_apply_suffix(t_ast *node, void (*applyf)(t_ast *));
-
-//str utils
-char	**ft_split_except_quoted_part(char *s, char *s_sub, char c);
 
 //token utils
 void	free_token(void *content);
