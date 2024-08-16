@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 10:56:49 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 16:51:27 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t_ast	*parser(char *cmd, char **env)
 	if (pre_syntax_validation(cmd) < 0)
 	{
 		write(2, "Syntax error\n", ft_strlen("Syntax error\n"));
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	token_list = tokenizer(cmd);
 	if (post_syntax_validation(token_list) < 0) //TODO
 	{
 		ft_lstclear(&token_list, free);
 		write(2, "Syntax error\n", ft_strlen("Syntax error\n"));
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	expand_env_var(token_list, env); //TODO
 	ft_lstiter(token_list, remove_quotes);
