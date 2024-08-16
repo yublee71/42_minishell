@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 22:19:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 16:49:28 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	executor(t_ast *root, t_info *info)
 	int		status;
 
 	status = 0;
-	// if (info->cmd_cnt == 1)
+	// if (info->cmd_cnt == 1) //TODO: if built-in no fork
 	// 	child_process(-1, root, info);
 	// else
 	// 	exec_pipex(root, info, &status);
