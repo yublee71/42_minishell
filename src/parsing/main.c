@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:26:50 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:56:49 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ t_ast	*parser(char *cmd, char **env)
 		exit(EXIT_FAILURE);
 	}
 	expand_env_var(token_list, env); //TODO
-	ft_lstiter(token_list, remove_quotes); //TODO
+	ft_lstiter(token_list, remove_quotes);
 	root = build_tree(token_list);
 	ft_lstclear(&token_list, free);
 	return (root);
 }
-//gcc -L../../lib/ft -Wall -Wextra -Werror *.c -lft

@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/16 11:00:15 by yublee           ###   ########.fr        #
+#    Updated: 2024/08/16 16:10:40 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRCS			= \
 					src/parsing/post_syntax_validation.c \
 					src/parsing/pre_syntax_validation.c \
 					src/parsing/tokenization.c \
+					src/parsing/utils_args.c \
+					src/parsing/utils_quote.c \
 					src/parsing/utils.c \
 					src/init_execution/main.c \
 					src/execution/child_process.c \
