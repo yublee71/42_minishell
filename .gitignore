@@ -26,6 +26,3 @@ build/
 
 #executables
 a.out
-
-#for readline memory leak
-suppressions.supp
