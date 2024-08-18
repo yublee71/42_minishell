@@ -66,8 +66,15 @@ t_info	init_executor(t_ast *root, char **env)
 {
 	t_info	info;
 	int		pipe_cnt;
-
-	info.env = env;
+	int		env_count;
+	t_env		**env_arr;
+	
+	env_count = ft_count_env(env); // maybe can be function array_size?
+	env_arr = malloc(sizeof(t_env *)* env_count);
+	/*if (!env_arr)
+		return(NULL);*/
+	ft_initenv(env, env_arr);
+	info.env = env_arr;
 	info.root = root;
 	pipe_cnt = count_pipe(root);
 	info.cmd_cnt = pipe_cnt + 1;

@@ -56,10 +56,18 @@ typedef struct s_ast
 typedef struct s_info
 {
 	int		cmd_cnt;
-	char	**env;
+	t_env	**env;
 	int		**fds;
 	t_ast	*root;
 }	t_info;
+
+typedef struct s_env
+{
+	char    *name;
+	char	*var;
+	struct s_env   *next;
+}	t_env;
+
 
 //parser
 t_ast	*parser(char *cmd, char **env);

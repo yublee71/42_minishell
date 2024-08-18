@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
+/*   By: tchoi <tchoi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:55:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:28:22 by yublee           ###   ########.fr       */
+/*   Updated: 2024/08/18 11:41:24 by tchoi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_before_exit(t_info	*info)
 		free_array_until((void **)info->fds, info->cmd_cnt - 1);
 	if (info->root)
 		ast_apply_suffix(info->root, ast_free_node);
+	if (info->env)
+		free_env(info->env);
 }
 
 void	exit_with_message(char *str, int exit_no, t_info *info)
