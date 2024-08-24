@@ -12,8 +12,7 @@
 
 #include "buildin.h"
 
-
-int		ft_validate_argu(char *str)
+static int		ft_validate_argu(char *str)
 {
 	int		i;
 

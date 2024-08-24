@@ -13,7 +13,7 @@
 #include "buildin.h"
 
 
-void ft_print_env(char *envstr)
+static void ft_print_env(char *envstr)
 {
 	int i;
 	int not_quoted; // if there are more than 1 '=' sign in the env, only add " after the first '=' sign
@@ -35,7 +35,7 @@ void ft_print_env(char *envstr)
 	printf("\"\n");
 }
 
-int count_env(t_env **env)
+static int count_env(t_env **env)
 {
 	int i;
 
@@ -48,7 +48,7 @@ int count_env(t_env **env)
 	return (i);
 }
 
-int find_first_unsort_env(int *indexarr, char **env)
+static int find_first_unsort_env(int *indexarr, char **env)
 {
 	int i = 0;
 	while(indexarr[i] != -42)
@@ -59,7 +59,7 @@ int find_first_unsort_env(int *indexarr, char **env)
 	}
 }
 
-char **ft_sort_env(t_env **env, int *indexarr, char **sortedarr, int env_len)
+static char **ft_sort_env(t_env **env, int *indexarr, char **sortedarr, int env_len)
 {
 	int i;
 	int j;

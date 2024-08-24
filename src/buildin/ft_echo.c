@@ -14,7 +14,7 @@
 
 //check if there is -n, and return the index after the -n
 //or return 0 if there is not = can print out the str starting from index
-int		check_newline_option(char *str)
+static int		check_newline_option(char *str)
 {
 	int i = 0;
 
