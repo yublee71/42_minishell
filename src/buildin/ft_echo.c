@@ -6,7 +6,7 @@
 /*   By: tchoi <tchoi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 11:51:48 by tchoi             #+#    #+#             */
-/*   Updated: 2024/08/18 12:07:31 by tchoi            ###   ########.fr       */
+/*   Updated: 2024/08/24 16:03:54 by tchoi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int		check_newline_option(char *str)
 // echo xyz -> xyz
 int		ft_echo(char *str)
 {
-    int i;
-    int newline;
+	int		i;
+	int		newline;
 
-    newline = 1; //default has to output trailing newline
-    i = check_newline_option(str);
-    if (i > 1)
-        newline = 0;
-    while(str[i])
-    {
-        ft_putchar_fd(str[i], 1);   
-        i++;
-    }
-    if (newline)
-        ft_putchar_fd('\n', 1);
-    return (0);
+	newline = 1; //default has to output trailing newline
+	i = check_newline_option(str);
+	if (i > 1)
+		newline = 0;
+	while(str[i])
+	{
+		ft_putchar_fd(str[i], 1);   
+		i++;
+	}
+	if (newline)
+		ft_putchar_fd('\n', 1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tchoi <tchoi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:05:31 by tchoi             #+#    #+#             */
-/*   Updated: 2024/08/18 14:37:12 by tchoi            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:45:44 by tchoi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 void ft_print_env(char *envstr)
 {
 	int i;
-	int quoted;
+	int not_quoted; // if there are more than 1 '=' sign in the env, only add " after the first '=' sign
 
 	i = 0;
-	quoted = 1;
+	not_quoted = 1;
 	ft_printf("declare -x ");
 	while (envstr[i])
 	{
-		if ((envstr[i] == '=') && quoted)
+		if ((envstr[i] == '=') && not_quoted)
 		{
 			printf("=\"");
-			quoted = 0;
+			not_quoted = 0;
 		}
 		else
 			printf("%c", envstr[i]);
@@ -35,13 +35,16 @@ void ft_print_env(char *envstr)
 	printf("\"\n");
 }
 
-int count_env(char **env)
+int count_env(t_env **env)
 {
 	int i;
 
 	i = 0;
-	while (env[i])
-		i++;
+	while(*env)
+    {
+        i++;
+        *env = (*env)->next;
+    }
 	return (i);
 }
 
@@ -56,7 +59,7 @@ int find_first_unsort_env(int *indexarr, char **env)
 	}
 }
 
-char **ft_sort_env(char **env, int *indexarr, char **sortedarr, int env_len)
+char **ft_sort_env(t_env **env, int *indexarr, char **sortedarr, int env_len)
 {
 	int i;
 	int j;
@@ -84,14 +87,14 @@ char **ft_sort_env(char **env, int *indexarr, char **sortedarr, int env_len)
 	return(sortedarr);
 }
 
-int ft_export(char **env, t_info *info)
+int ft_export(t_info *info)
 {
 	int count;
 	int *indexarr; // keep track on the sorted env, if already allocated to the right place, will update to -1 e.g. [0,1,2,3,4,5,-1,7,-1]
 	char **sortedenv;
 	int i;
 
-	count = count_env(env);
+	count = count_env(info->env);
 	indexarr = malloc(sizeof(int) * (count + 1));
 	sortedenv = malloc(sizeof(char *) * (count + 1));
 	if(!indexarr || !sortedenv)
@@ -100,7 +103,7 @@ int ft_export(char **env, t_info *info)
 	while(++i < count) // init the value for index arr [0,1,2, ... ,-42]
 		indexarr[i] = i;
 	indexarr[i] = -42;
-	sortedenv = ft_sort_env(env, indexarr, sortedenv, count);
+	sortedenv = ft_sort_env(info->env, indexarr, sortedenv, count);
 	i = -1;
 	while (sortedenv[++i])
 		ft_print_env(sortedenv[i]);
