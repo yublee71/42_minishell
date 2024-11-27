@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/08/16 16:10:40 by yublee           ###   ########.fr        #
+#    Updated: 2024/11/27 21:55:43 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS			= \
 					src/utils/utils_array.c \
 					src/utils/utils_token.c \
 					src/utils/utils_tree.c \
+					src/utils/signal.c \
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)

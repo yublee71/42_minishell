@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 16:53:31 by yublee           ###   ########.fr       */
+/*   Updated: 2024/11/27 22:30:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	//TODO: signal
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 	while (1)
 	{
 		cmd = readline("minishell$ ");
@@ -41,7 +43,10 @@ int	main(int argc, char **argv, char **env)
 			}
 		}
 		else
+		{
+			printf("exit\n");
 			break ;
+		}
 		add_history(cmd);
 		free(cmd);
 	}

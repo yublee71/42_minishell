@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 16:22:24 by yublee           ###   ########.fr       */
+/*   Updated: 2024/11/27 22:01:11 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "libft.h"
 # include "get_next_line.h"
 # define READ_END 0
@@ -88,5 +89,9 @@ void	free_array_until(void **array, int i);
 //exit
 void	exit_with_message(char *str, int exit_no, t_info *info);
 void	free_before_exit(t_info	*info);
+
+//signal
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
 
 #endif
