@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/11/29 18:56:19 by yublee           ###   ########.fr       */
+/*   Updated: 2024/11/29 18:59:08 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		// printf("?\n");
 		if (g_sigint_received)
 		{
 			g_sigint_received = 0;
