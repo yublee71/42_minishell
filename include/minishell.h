@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/11/27 22:01:11 by yublee           ###   ########.fr       */
+/*   Updated: 2024/11/29 18:56:51 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include "get_next_line.h"
 # define READ_END 0
 # define WRITE_END 1
+
+static int	g_sigint_received = 0;
 
 typedef enum e_token_type
 {
@@ -92,6 +94,5 @@ void	free_before_exit(t_info	*info);
 
 //signal
 void	handle_sigint(int sig);
-void	handle_sigquit(int sig);
 
 #endif

@@ -6,11 +6,15 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/11/27 22:30:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/11/29 18:56:19 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int event(void) { 
+	return (0);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -21,10 +25,17 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	//TODO: signal
+	rl_event_hook = event;
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		// printf("?\n");
+		if (g_sigint_received)
+		{
+			g_sigint_received = 0;
+			continue;
+		}
 		cmd = readline("minishell$ ");
 		if (cmd)
 		{
