@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 14:14:43 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/02 21:08:28 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	child_process(int i, t_ast *cmd_node, t_info *info)
 	char	**args;
 	char	*cmd_path;
 
+	signal(SIGINT, handle_sigint_heredoc);
 	set_stdin(i, cmd_node, info);
 	set_stdout(i, cmd_node, info);
 	args = cmd_node->args;

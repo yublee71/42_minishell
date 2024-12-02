@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 00:03:53 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/02 21:35:35 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,41 @@ static void	add_random_str_to_str(char *buf, size_t size, char *s, size_t rand)
 	ft_strncat(buf, random_code, rand);
 }
 
-static void	write_until_delimiter(int tty_fd, int new_fd, char *delimiter)
+static void	write_until_delimiter(int new_fd, char *delimiter)
 {
 	char	*buf;
 
 	while (1)
 	{
-		write(1, "> ", 2);
-		buf = get_next_line(tty_fd);
+		if (g_sigint_received)
+			break;
+		buf = readline("> ");
 		if (ft_strlen(buf) - 1 == ft_strlen(delimiter)
 			&& !ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
 			break ;
 		write(new_fd, buf, ft_strlen(buf));
 		free(buf);
 	}
-	free(buf);
+	if (!g_sigint_received)
+		free(buf);
 }
 
 static void	handle_heredoc_input(char *delimiter, t_info *info)
 {
-	int		tty_fd;
 	int		new_fd;
 	char	filename[FILENAME_MAX];
 
 	ft_memset(filename, 0, FILENAME_MAX);
 	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
 	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	tty_fd = open("/dev/tty", O_RDONLY);
-	if (tty_fd < 0 || new_fd < 0)
+	if (new_fd < 0)
 		exit_with_message("open", EXIT_FAILURE, info);
-	write_until_delimiter(tty_fd, new_fd, delimiter);
+	write_until_delimiter(new_fd, delimiter);
 	new_fd = open(filename, O_RDWR);
 	if (new_fd < 0)
 		exit_with_message("open", EXIT_FAILURE, info);
 	if (dup2(new_fd, STDIN_FILENO) < 0)
 		exit_with_message("heredoc", EXIT_FAILURE, info);
-	close(tty_fd);
 	close(new_fd);
 	unlink(filename);
 }
