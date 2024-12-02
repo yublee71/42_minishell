@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/02 21:35:35 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/02 21:43:09 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ static void	write_until_delimiter(int new_fd, char *delimiter)
 		if (g_sigint_received)
 			break;
 		buf = readline("> ");
-		if (ft_strlen(buf) - 1 == ft_strlen(delimiter)
-			&& !ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
-			break ;
-		write(new_fd, buf, ft_strlen(buf));
-		free(buf);
+		if (buf)
+		{
+			if (ft_strlen(buf) - 1 == ft_strlen(delimiter)
+				&& !ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
+				break ;
+			write(new_fd, buf, ft_strlen(buf));
+			free(buf);
+		}
+		else
+			return;
 	}
 	if (!g_sigint_received)
 		free(buf);
