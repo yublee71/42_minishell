@@ -6,23 +6,23 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:41:06 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:32:48 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:50:52 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// int	array_size(void **arr)
-// {
-// 	int	i;
+int	array_size(void **arr)
+{
+	int	i;
 
-// 	if (!arr)
-// 		return (-1);
-// 	i = 0;
-// 	while (arr[i])
-// 		i++;
-// 	return (i);
-// }
+	if (!arr)
+		return (-1);
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
 
 // t_list	*array_to_list(void **arr)
 // {

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:45:38 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:49:59 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	free_token(void *content);
 void	print_token(void *content);
 
 //array utils
+int		array_size(void **arr);
 void	free_array(void **array);
 void	free_array_until(void **array, int i);
 

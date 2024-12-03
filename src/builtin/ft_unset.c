@@ -6,21 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 21:55:17 by tikochoi          #+#    #+#             */
-/*   Updated: 2024/12/03 19:46:03 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:51:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-static int	ft_count_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
-}
 
 static t_env	*ft_lstlast(t_env *lst)
 {

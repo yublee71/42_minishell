@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:46:26 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:50:37 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	call_builtin(char **env) // combine to the set up function, should be ready 
 	int		env_count;
 	t_env	**env_arr;
 
-	env_count = ft_count_env(env);
+	env_count = array_size(env);
 	env_arr = malloc(sizeof(t_env *) * env_count);
 	ft_initenv(env, env_arr);
 	//t_env *temp = *env_arr;
