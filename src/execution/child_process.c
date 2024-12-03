@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 14:14:43 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/02 23:28:13 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	child_process(int i, t_ast *cmd_node, t_info *info)
 
 	set_stdin(i, cmd_node, info);
 	set_stdout(i, cmd_node, info);
+	if (g_sigint_received)
+		exit_with_message(NULL, EXIT_SUCCESS, info);
 	args = cmd_node->args;
 	if (args == NULL)
 		exit_with_message(NULL, EXIT_SUCCESS, info);

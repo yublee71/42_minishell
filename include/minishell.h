@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 16:22:24 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/02 21:07:24 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "libft.h"
 # include "get_next_line.h"
 # define READ_END 0
 # define WRITE_END 1
+
+extern int	g_sigint_received;
 
 typedef enum e_token_type
 {
@@ -88,5 +91,9 @@ void	free_array_until(void **array, int i);
 //exit
 void	exit_with_message(char *str, int exit_no, t_info *info);
 void	free_before_exit(t_info	*info);
+
+//signal
+void	handle_sigint(int sig);
+void	handle_sigint_heredoc(int sig);
 
 #endif
