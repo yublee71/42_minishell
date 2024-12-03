@@ -6,12 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:30:58 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/03 19:08:13 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:26:39 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-#include "../../lib/ft/include/libft.h"
+#include "builtin.h"
 
 //check if there is -n, and return the index after the -n
 //or return 0 if there is not = can print out the str starting from index

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 12:28:26 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/03 19:26:47 by yublee           ###   ########.fr       */
+/*   Created: 2024/12/03 19:19:22 by yublee            #+#    #+#             */
+/*   Updated: 2024/12/03 19:20:07 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-int	ft_pwd(void)
-{
-	char	*str;
+# include "../../include/minishell.h"
 
-	str = getcwd(NULL, 0);
-	if (!str)
-	{
-		printf("Error: pwd\n");
-		exit(1);
-	}
-	printf("%s\n", str);
-	return (0);
-}
+int	ft_cd(char *path_to_go, char **env);
+int	ft_echo(char *str);
+int	ft_export(char **env);
+int	ft_pwd(void);
+int	ft_unset(char *name, t_env **env_arr);
+
+#endif

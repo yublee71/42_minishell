@@ -6,12 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:47:01 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/03 19:09:50 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:26:43 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-#include "../../lib/ft/include/libft.h"
+#include "builtin.h"
 
 static void	initindex(int **indexarr, int count)
 {
