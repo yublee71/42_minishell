@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/11/27 21:55:43 by yublee           ###   ########.fr        #
+#    Updated: 2024/12/03 18:47:42 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,11 @@ SRCS			= \
 					src/utils/utils_token.c \
 					src/utils/utils_tree.c \
 					src/utils/signal.c \
+					src/builtin/ft_cd.c \
+					src/builtin/ft_echo.c \
+					src/builtin/ft_export.c \
+					src/builtin/ft_pwd.c \
+					src/builtin/ft_unset.c \
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)

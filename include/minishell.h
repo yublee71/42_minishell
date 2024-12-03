@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/02 21:07:24 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 18:50:00 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,20 @@ typedef struct s_info
 
 typedef struct s_env
 {
-	char    *name;
-	char	*var;
-	struct s_env   *next;
+	char			*name;
+	char			*var;
+	struct s_env	*next;
 }	t_env;
 
 //parser
 t_ast	*parser(char *cmd, char **env);
 
-//buildin
-int ft_cd(char *path_to_go, char **env);
-int ft_echo(char *str);
-int ft_export(char **env);
-int ft_pwd(void);
+//built-in
+int	ft_cd(char *path_to_go, char **env);
+int	ft_echo(char *str);
+int	ft_export(char **env);
+int	ft_pwd(void);
 int	ft_unset(char *name, t_env **env_arr);
-
 
 //execution initiation
 t_info	init_executor(t_ast *root, char **env);
