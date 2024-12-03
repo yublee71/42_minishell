@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 21:55:17 by tikochoi          #+#    #+#             */
-/*   Updated: 2024/12/03 19:22:50 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:43:13 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,38 +46,7 @@ static void	ft_envadd_back(t_env **lst, t_env *new)
 	last->next = new;
 }
 
-static void	ft_initenv(char **env, t_env **env_arr)
-{
-	int		i;
-	int		name_len;
-	int		env_len;
-	t_env	*new_env;
-	t_env	**current;
 
-	current = env_arr;
-	i = 0;
-	name_len = 0;
-	env_len = 0;
-	while (env[i])
-	{
-		new_env = malloc(sizeof(t_env));
-		if (!new_env)
-			return ; //error_handle
-		name_len = ft_strchr(env[i], '='); // name= ; search for '=', return 4
-		if (!name_len)
-			exit(EXIT_FAILURE); //error handle
-		env_len = ft_strlen(env[i]) - name_len;
-		new_env->name = malloc(sizeof(char *) * name_len + 1);
-		new_env->var = malloc(sizeof(char *) * env_len);
-		if ((!new_env->name) || (!new_env->var))
-			return ;
-		new_env->name = ft_substr(env[i], 0, name_len);
-		new_env->var = ft_substr(env[i], name_len + 1, env_len);
-		new_env->next = NULL;
-		ft_envadd_back(env_arr, new_env);
-		i++;
-	}
-}
 
 int	ft_unset(char *name, t_env **env_arr)
 {
