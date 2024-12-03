@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:23:33 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:45:38 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_env
 t_ast	*parser(char *cmd, char **env);
 
 //built-in
-int	call_builtin(int argc, char **argv, char **env);
+int		call_builtin(char **env);
 
 //execution initiation
 t_info	init_executor(t_ast *root, char **env);

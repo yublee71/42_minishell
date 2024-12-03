@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:43:27 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:46:26 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	ft_initenv(char **env, t_env **env_arr)
 }
 
 //TODO: modify
-int	call_builtin(int argc, char **argv, char **env) // combine to the set up function, should be ready when first start the shell
+int	call_builtin(char **env) // combine to the set up function, should be ready when first start the shell
 {
 	int		env_count;
 	t_env	**env_arr;

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 21:55:17 by tikochoi          #+#    #+#             */
-/*   Updated: 2024/12/03 19:43:13 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:46:03 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static void	ft_envadd_back(t_env **lst, t_env *new)
 	last = ft_lstlast(*lst);
 	last->next = new;
 }
-
-
 
 int	ft_unset(char *name, t_env **env_arr)
 {
