@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:49:59 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 02:05:13 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ typedef struct s_token
 	t_token_type	type;
 }	t_token;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*var;
+	struct s_env	*next;
+}	t_env;
+
 //AST: Abstract Syntax Tree
 typedef struct s_ast
 {
@@ -60,28 +67,22 @@ typedef struct s_info
 {
 	int		cmd_cnt;
 	char	**env;
+	t_env	**env_arr;
 	int		**fds;
 	t_ast	*root;
 }	t_info;
 
-typedef struct s_env
-{
-	char			*name;
-	char			*var;
-	struct s_env	*next;
-}	t_env;
-
 //parser
 t_ast	*parser(char *cmd, char **env);
-
-//built-in
-int		call_builtin(char **env);
 
 //execution initiation
 t_info	init_executor(t_ast *root, char **env);
 
 //execution
 void	executor(t_ast *root, t_info *info);
+
+//built-in
+int		call_builtin(t_ast *cmd_node, t_info *info); // combine to the set up function, should be ready when first start the shell
 
 //tree utils
 void	ast_print_node(t_ast *node);
@@ -106,5 +107,9 @@ void	free_before_exit(t_info	*info);
 //signal
 void	handle_sigint(int sig);
 void	handle_sigint_heredoc(int sig);
+
+//env
+t_env	**get_env_array(char **env);
+int		is_builtin(char *cmd);
 
 #endif

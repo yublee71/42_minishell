@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/12/03 18:47:42 by yublee           ###   ########.fr        #
+#    Updated: 2024/12/05 02:07:17 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS			= \
 					src/parsing/utils.c \
 					src/init_execution/main.c \
 					src/execution/child_process.c \
+					src/execution/exec_builtin.c \
 					src/execution/main.c \
 					src/execution/stdin.c \
 					src/execution/stdout.c \
@@ -45,11 +46,13 @@ SRCS			= \
 					src/utils/utils_token.c \
 					src/utils/utils_tree.c \
 					src/utils/signal.c \
+					src/utils/env.c \
 					src/builtin/ft_cd.c \
 					src/builtin/ft_echo.c \
 					src/builtin/ft_export.c \
 					src/builtin/ft_pwd.c \
 					src/builtin/ft_unset.c \
+					src/builtin/main.c \
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)

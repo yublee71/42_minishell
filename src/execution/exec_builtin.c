@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 19:19:22 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:10:24 by yublee           ###   ########.fr       */
+/*   Created: 2024/12/05 01:29:40 by yublee            #+#    #+#             */
+/*   Updated: 2024/12/05 02:08:48 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "execution.h"
 
-# include "../../include/minishell.h"
-
-int	ft_cd(char *path_to_go, char **env);
-int	ft_echo(char *str);
-int	ft_export(char **env);
-int	ft_pwd(void);
-int	ft_unset(char *name, t_env **env);
-
-#endif
+void	exec_builtin(t_ast *cmd_node, t_info *info)
+{
+	set_stdin(-1, cmd_node, info);
+	set_stdout(-1, cmd_node, info);
+	call_builtin(cmd_node, info);
+}
