@@ -13,6 +13,23 @@
 #include "../../include/minishell.h"
 
 //TODO: add exit
+void	free_env(t_env **env)
+{
+	t_env	*current;
+	t_env	*next;
+
+	current = *env;
+	while (current)
+	{
+		next = current->next;
+		free(current->name);
+		free(current->var);
+		free(current);
+		current = next;
+	}
+	free(env);
+}
+
 int	is_builtin(char *cmd)
 {
 	const char	*builtins[5] = {"cd", "echo", "export", "pwd", "unset"};
@@ -53,7 +70,7 @@ static void	ft_envadd_back(t_env **lst, t_env *new)
 	last->next = new;
 }
 
-static void	ft_initenv(char **env, t_env **env_arr)
+static void	ft_initenv(t_env **lst, char **env)
 {
 	int		i;
 	int		name_len;
@@ -66,33 +83,32 @@ static void	ft_initenv(char **env, t_env **env_arr)
 	env_len = 0;
 	while (env[i])
 	{
-		new_env = malloc(sizeof(t_env));
+		new_env = (t_env *)malloc(sizeof(t_env));
 		if (!new_env)
-			return ; //error_handle
+			exit(EXIT_FAILURE);
 		var = ft_strchr(env[i], '='); // name= ; search for '=', return 4
 		if (!var)
 			exit(EXIT_FAILURE); //error handle
 		name_len = ft_strlen(env[i]) - ft_strlen(var);
 		env_len = ft_strlen(env[i]) - name_len;
-		new_env->name = malloc(sizeof(char *) * name_len + 1);
-		new_env->var = malloc(sizeof(char *) * env_len);
+		new_env->name = (char *)malloc(name_len + 1);
+		new_env->var = (char *)malloc(env_len);
 		if ((!new_env->name) || (!new_env->var))
 			return ;
 		new_env->name = ft_substr(env[i], 0, name_len);
 		new_env->var = ft_substr(env[i], name_len + 1, env_len);
 		new_env->next = NULL;
-		ft_envadd_back(env_arr, new_env);
+		ft_envadd_back(lst, new_env);
 		i++;
 	}
 }
 
-t_env	**get_env_array(char **env)
+t_env	**get_env_lst(char **env)
 {
-	int		env_count;
-	t_env	**env_arr;
+	t_env	**lst;
 
-	env_count = array_size((void **)env);
-	env_arr = malloc(sizeof(t_env *) * env_count);
-	ft_initenv(env, env_arr);
-	return (env_arr);
+	lst = (t_env **)malloc(sizeof(t_env *));
+	*lst = NULL;
+	ft_initenv(lst, env);
+	return (lst);
 }

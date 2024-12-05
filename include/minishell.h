@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:52:40 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 04:02:24 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_info
 {
 	int		cmd_cnt;
 	char	**env;
-	t_env	**env_arr;
+	t_env	**env_lst;
 	int		**fds;
 	t_ast	*root;
 }	t_info;
@@ -82,7 +82,7 @@ t_info	init_executor(t_ast *root, char **env);
 void	executor(t_ast *root, t_info *info);
 
 //built-in
-int		call_builtin(char **args, t_info *info); // combine to the set up function, should be ready when first start the shell
+int		call_builtin(char **args, t_info *info);
 
 //tree utils
 void	ast_print_node(t_ast *node);
@@ -109,7 +109,8 @@ void	handle_sigint(int sig);
 void	handle_sigint_heredoc(int sig);
 
 //env
-t_env	**get_env_array(char **env);
+t_env	**get_env_lst(char **env);
 int		is_builtin(char *cmd);
+void	free_env(t_env **env);
 
 #endif

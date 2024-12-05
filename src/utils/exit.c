@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:55:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:56:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 04:01:42by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_before_exit(t_info	*info)
 		free_array_until((void **)info->fds, info->cmd_cnt - 1);
 	if (info->root)
 		ast_apply_suffix(info->root, ast_free_node);
+	if (info->env_lst)
+		free_env(info->env_lst);
 }
 
 void	exit_with_message(char *str, int exit_no, t_info *info)

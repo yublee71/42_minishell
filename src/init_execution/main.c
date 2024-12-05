@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 23:32:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:06:26 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 04:02:17 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_info	init_executor(t_ast *root, char **env)
 	int		pipe_cnt;
 
 	info.env = env;
-	info.env_arr = get_env_array(env);
+	info.env_lst = get_env_lst(env);
 	info.root = root;
 	pipe_cnt = count_pipe(root);
 	info.cmd_cnt = pipe_cnt + 1;
