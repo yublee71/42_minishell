@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:03:12 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 02:14:41 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	call_builtin(t_ast *cmd_node, t_info *info) // combine to the set up functio
 	args = cmd_node->args;
 	i = is_builtin(args[0]);
 	if (i == 0)
-		return (ft_cd(args[1], info->env));
+		return (ft_cd(args[1], info->env_arr));
 	else if (i == 1)
 		return (ft_echo(args[1]));
 	else if (i == 2)
