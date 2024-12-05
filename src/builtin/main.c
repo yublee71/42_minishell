@@ -6,11 +6,35 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:50:37 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 00:47:49 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+static t_env	*ft_envlstlast(t_env *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+static void	ft_envadd_back(t_env **lst, t_env *new)
+{
+	t_env	*last;
+
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	last = ft_envlstlast(*lst);
+	last->next = new;
+}
 
 static void	ft_initenv(char **env, t_env **env_arr)
 {
