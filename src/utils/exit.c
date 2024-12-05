@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:55:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:28:22 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 02:56:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exit_with_message(char *str, int exit_no, t_info *info)
 			write(2, str, ft_strlen(str));
 			write(2, ": command not found\n", 20);
 		}
-		else
+		else if (exit_no)
 			perror(str);
 	}
 	free_before_exit(info);

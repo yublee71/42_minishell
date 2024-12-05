@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:05:13 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 02:52:40 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_info	init_executor(t_ast *root, char **env);
 void	executor(t_ast *root, t_info *info);
 
 //built-in
-int		call_builtin(t_ast *cmd_node, t_info *info); // combine to the set up function, should be ready when first start the shell
+int		call_builtin(char **args, t_info *info); // combine to the set up function, should be ready when first start the shell
 
 //tree utils
 void	ast_print_node(t_ast *node);

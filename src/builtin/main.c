@@ -6,19 +6,17 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 02:14:41 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 02:52:19 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
 // //TODO: modify
-int	call_builtin(t_ast *cmd_node, t_info *info) // combine to the set up function, should be ready when first start the shell
+int	call_builtin(char **args, t_info *info) // combine to the set up function, should be ready when first start the shell
 {
-	char	**args;
 	int		i;
 
-	args = cmd_node->args;
 	i = is_builtin(args[0]);
 	if (i == 0)
 		return (ft_cd(args[1], info->env_arr));
