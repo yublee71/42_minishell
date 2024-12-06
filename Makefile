@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/12/05 02:07:17 by yublee           ###   ########.fr        #
+#    Updated: 2024/12/06 20:34:34 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,8 @@ SRCS			= \
 					src/builtin/ft_export.c \
 					src/builtin/ft_pwd.c \
 					src/builtin/ft_unset.c \
+					src/builtin/ft_env.c \
+					src/builtin/ft_exit.c \
 					src/builtin/main.c \
 
 BUILD_DIR		= build

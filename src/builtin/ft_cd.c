@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/05 02:43:04 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/06 20:33:46 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	change_directory(char *path, t_env **env)
 }
 
 // cd  == go back HOME
-// cd .. == go to OLDPWD
+// cd .. == go to 1 step before
 // cd absolute path = go to that path
 // TODO: error control 
 // TODO: set the update the OLDPWD to PWD
