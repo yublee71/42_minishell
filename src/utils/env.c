@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:22:36 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:29:55 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,6 @@ static void	ft_initenv(t_env **lst, char **env)
 			exit(EXIT_FAILURE); //error handle
 		name_len = ft_strlen(env[i]) - ft_strlen(var);
 		env_len = ft_strlen(env[i]) - name_len;
-		new_env->name = (char *)malloc(name_len + 1);
-		new_env->var = (char *)malloc(env_len);
-		if ((!new_env->name) || (!new_env->var))
-			return ;
 		new_env->name = ft_substr(env[i], 0, name_len);
 		new_env->var = ft_substr(env[i], name_len + 1, env_len);
 		new_env->next = NULL;
