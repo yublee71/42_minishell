@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 01:19:29 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/16 16:18:53 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 01:22:19 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,36 @@ void	remove_quotes(void *content)
 		free(str);
 		token->value = new;
 	}
+}
+
+char	*mask_single_quoted_part(char *s)
+{
+	char	*s_tmp;
+	size_t	i;
+	char	quote;
+
+	if (!s)
+		return (NULL);
+	s_tmp = ft_strdup(s);
+	if (!s_tmp)
+		exit(EXIT_FAILURE);
+	i = 0;
+	if (s[i] == '\"')
+		return (s_tmp);
+	while (s[i])
+	{
+		if (s[i] == '\'')
+		{
+			quote = s[i];
+			s_tmp[i] = quote;
+			while (s[++i] && s[i] != quote)
+				s_tmp[i] = quote;
+			if (!s[i])
+				break ;
+		}
+		i++;
+	}
+	return (s_tmp);
 }
 
 char	*mask_quoted_part(char *s)

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:27:36 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:56:20 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 01:05:44 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_ast	*build_tree(t_list *token_list);
 char	**get_args(t_list *token_list);
 void	remove_quotes(void *content);
 void	remove_quotes(void *content);
+char	*mask_single_quoted_part(char *s);
 char	*mask_quoted_part(char *s);
 int		ft_isoperater(char c);
 
