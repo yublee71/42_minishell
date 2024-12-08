@@ -6,19 +6,19 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 21:55:17 by tikochoi          #+#    #+#             */
-/*   Updated: 2024/12/05 02:11:27 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:58:19 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	ft_unset(char *name, t_env **env)
+int	ft_unset(char *name, t_env **env_lst)
 {
 	int		i;
 	t_env	*temp;
 	t_env	**current;
 
-	current = env;
+	current = env_lst;
 	i = ft_strlen(name);
 	while (*current)
 	{

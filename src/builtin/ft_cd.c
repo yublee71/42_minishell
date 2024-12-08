@@ -6,19 +6,19 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/06 20:33:46 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:57:25 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int	change_directory(char *path, t_env **env)
+static int	change_directory(char *path, t_env **env_lst)
 {
 	char	*path_togo;
 	int		status;
 	t_env	*current;
 
-	current = *env;
+	current = *env_lst;
 	while (current)
 	{
 		if (ft_strlen(current->name) == ft_strlen(path)
@@ -40,7 +40,7 @@ static int	change_directory(char *path, t_env **env)
 // TODO: error control 
 // TODO: set the update the OLDPWD to PWD
 //                          PWD to path_to_go 
-int	ft_cd(char *path_to_go, t_env **env)
+int	ft_cd(char *path_to_go, t_env **env_lst)
 {
 	int		status;
 	// t_env	*current;
@@ -54,11 +54,11 @@ int	ft_cd(char *path_to_go, t_env **env)
 	// 	current = current->next;
 	// }
 	if (path_to_go == NULL)
-		status = change_directory("HOME", env);
+		status = change_directory("HOME", env_lst);
 	else if (!ft_strncmp(path_to_go, "..", 2))
-		status = change_directory("OLDPWD", env);
+		status = change_directory("OLDPWD", env_lst);
 	else
-		status = change_directory(path_to_go, env);
+		status = change_directory(path_to_go, env_lst);
 	if (status != 0)
 	{
 		printf("Error: cd\n");

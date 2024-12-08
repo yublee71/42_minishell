@@ -6,18 +6,18 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:29:55 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:58:00 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_env(t_env **env)
+void	free_env(t_env **env_lst)
 {
 	t_env	*current;
 	t_env	*next;
 
-	current = *env;
+	current = *env_lst;
 	while (current)
 	{
 		next = current->next;
@@ -26,7 +26,7 @@ void	free_env(t_env **env)
 		free(current);
 		current = next;
 	}
-	free(env);
+	free(env_lst);
 }
 
 int	is_builtin(char *cmd)
