@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:56:50 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 05:14:12 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	free_array_until(void **array, int i);
 
 //exit
 void	exit_with_message(char *str, int exit_no, t_info *info);
-void	free_before_exit(t_info	*info);
+void	free_before_exit(t_info *info, int is_parent_process);
 
 //signal
 void	handle_sigint(int sig);

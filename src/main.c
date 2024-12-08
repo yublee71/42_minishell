@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 03:07:57 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 05:18:17 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv, char **env)
 	rl_event_hook = event;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	env_lst = get_env_lst(env);
 	while (1)
 	{
 		if (g_sigint_received)
@@ -42,7 +43,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (ft_strlen(cmd))
 			{
-				env_lst = get_env_lst(env);
 				root = parser(cmd, env_lst);
 				// ast_apply_infix(root, ast_print_node); //print tree
 				//free only when testing without execution

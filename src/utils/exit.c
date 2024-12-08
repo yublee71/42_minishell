@@ -12,13 +12,13 @@
 
 #include "../../include/minishell.h"
 
-void	free_before_exit(t_info	*info)
+void	free_before_exit(t_info *info, int is_parent_process)
 {
 	if (info->fds)
 		free_array_until((void **)info->fds, info->cmd_cnt - 1);
 	if (info->root)
 		ast_apply_suffix(info->root, ast_free_node);
-	if (info->env_lst)
+	if (info->env_lst && !is_parent_process)
 		free_env(info->env_lst);
 }
 
@@ -34,6 +34,6 @@ void	exit_with_message(char *str, int exit_no, t_info *info)
 		else if (exit_no)
 			perror(str);
 	}
-	free_before_exit(info);
+	free_before_exit(info, 0);
 	exit(exit_no);
 }

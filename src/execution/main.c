@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 03:30:54 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 05:15:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	executor(t_ast *root, t_info *info)
 		exec_builtin(root, info);
 	else
 		exec_pipex(root, info, &status);
-	free_before_exit(info);
+	free_before_exit(info, 1);
 	// exit(WEXITSTATUS(status));//TODO:store status
 }
