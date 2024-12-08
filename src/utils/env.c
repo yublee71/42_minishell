@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:58:00 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 16:43:47 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	is_builtin(char *cmd)
 	int			i;
 
 	i = 0;
+	if (!cmd)
+		return (-1);
 	while (i < 5)
 	{
 		if (ft_strlen(cmd) == ft_strlen(builtins[i])
