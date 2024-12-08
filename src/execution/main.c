@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 01:47:57 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 03:30:54 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static void	exec_pipex(t_ast *root, t_info *info, int *status)
 	while (wait(NULL) != -1)
 		;
 }
-
 
 void	executor(t_ast *root, t_info *info)
 {

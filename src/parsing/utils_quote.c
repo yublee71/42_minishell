@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 01:19:29 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 01:22:19 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 03:35:07 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ char	*mask_single_quoted_part(char *s)
 	if (!s_tmp)
 		exit(EXIT_FAILURE);
 	i = 0;
-	if (s[i] == '\"')
-		return (s_tmp);
-	while (s[i])
+	while (s[0] != '\"' && s[i])
 	{
 		if (s[i] == '\'')
 		{
