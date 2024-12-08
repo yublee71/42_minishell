@@ -6,23 +6,21 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 03:12:08by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 05:00:52 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static char	*expand_str(char *new_str, char *var, size_t name_len)
+static char	*expand_str(char *new_str, size_t i, char *var, size_t name_len)
 {
-	size_t	dollar_len;
 	size_t	head_len;
 	size_t	tail_len;
 	size_t	var_len;
 	char	*str;
 
-	dollar_len = ft_strlen(ft_strchr(new_str, '$'));
-	head_len = ft_strlen(new_str) - dollar_len;
-	tail_len = dollar_len - name_len - 1;
+	head_len = i - 1;
+	tail_len = ft_strlen(new_str) - head_len - 1 - name_len;
 	var_len = 0;
 	if (var)
 		var_len = ft_strlen(var);
@@ -36,48 +34,68 @@ static char	*expand_str(char *new_str, char *var, size_t name_len)
 	return (str);
 }
 
-static char	*expand_dollar_sign(char *value, t_env **env_lst)
+char	*expand_var(t_env *env, size_t name_len, char *str, size_t i)
 {
-	size_t	name_len;
 	char	*new_str;
-	char	*dollar_str;
 	char	*tmp;
+
+	new_str = ft_strdup(str);
+	if (env)
+	{
+		tmp = new_str;
+		new_str = expand_str(str, i, env->var, name_len);
+		free(tmp);
+	}
+	else
+	{
+		tmp = new_str;
+		new_str = expand_str(str, i, NULL, name_len);
+		free(tmp);
+	}
+	free(str);
+	return (new_str);
+}
+
+t_env	*search_name_in_env(t_env **env_lst, size_t name_len, char *str)
+{
 	t_env	*current;
 
 	current = *env_lst;
-	new_str = value;
-	while (ft_strchr(new_str, '$'))
+	while (current)
 	{
-		name_len = 0;
-		dollar_str = ft_strchr(new_str, '$');
-		while (dollar_str[name_len] &&
-			!isspace(dollar_str[name_len])
-			&& dollar_str[name_len] != '\''
-			&& dollar_str[name_len] != '\"')
-			name_len++;
-		name_len--;
-		if (!name_len)
-			return (new_str);
-		while (current)
+		if (name_len == ft_strlen(current->name)
+			&& !ft_strncmp(str, current->name, name_len))
+			break ;
+		current = current->next;
+	}
+	return (current);
+}
+
+static char	*expand_dollar_sign(char *str, t_env **env_lst)
+{
+	size_t	name_len;
+	size_t	i;
+	t_env	*env;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i++] == '$')
 		{
-			if (name_len == ft_strlen(current->name) &&
-				!ft_strncmp(dollar_str + 1, current->name, name_len))
+			name_len = 0;
+			while (str[i + name_len] && !isspace(str[i + name_len])
+				&& str[i + name_len] != '\'' && str[i + name_len] != '\"')
+				name_len++;
+			if (name_len)
 			{
-				tmp = new_str;
-				new_str = expand_str(new_str, current->var, name_len);
-				free(tmp);
-				break ;
+				env = search_name_in_env(env_lst, name_len, str + i);
+				str = expand_var(env, name_len, str, i);
+				if (env)
+					i += ft_strlen(env->var);
 			}
-			current = current->next;
-		}
-		if (!current)
-		{
-			tmp = new_str;
-			new_str = expand_str(new_str, NULL, name_len);
-			free(tmp);
 		}
 	}
-	return (new_str);
+	return (str);
 }
 
 //mask only single quote
