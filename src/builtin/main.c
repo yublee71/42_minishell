@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 04:06:29 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:24:25 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ int	call_builtin(char **args, t_info *info) // combine to the set up function, s
 	else if (i == 1)
 		status = ft_echo(args[1]);
 	else if (i == 2)
-		status = ft_export(info->env);
-	else if (i == 3)
-		status = ft_pwd();
+		status = ft_env(info);
+	//TODO: include exit
+	// else if (i == 3)
+	// 	status = ft_exit();
 	else if (i == 4)
+		status = ft_export(info->env);
+	else if (i == 5)
+		status = ft_pwd();
+	else if (i == 6)
 		status = ft_unset(args[1], info->env_lst);
 	return (status);
 	//t_env *temp = *env_arr;

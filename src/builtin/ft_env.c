@@ -6,23 +6,23 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 19:09:30 by tikochoi          #+#    #+#             */
-/*   Updated: 2024/12/06 20:35:42 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:23:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int		ft_env(t_env **env, t_info *info)
+int		ft_env(t_info *info)
 {
 	t_env	*current;
 
-	current = *env;
-	if(!current)
+	current = *(info->env_lst);
+	if (!current)
 		exit_with_message("env", EXIT_FAILURE, info);
-	while(current)
+	while (current)
 	{
 		ft_printf("%s=%s\n", current->name, current->var);
 		current = current->next;
 	}
-	return(0);
+	return (0);
 }

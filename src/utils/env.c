@@ -5,14 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 00:51:02 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/05 01:01:49by yublee           ###   ########.fr       */
+/*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
+/*   Updated: 2024/12/08 00:22:36 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//TODO: add exit
 void	free_env(t_env **env)
 {
 	t_env	*current;
@@ -32,8 +31,9 @@ void	free_env(t_env **env)
 
 int	is_builtin(char *cmd)
 {
-	const char	*builtins[5] = {"cd", "echo", "export", "pwd", "unset"};
-	int		i;
+	const char	*builtins[7] = {"cd", "echo", "env",
+		"exit", "export", "pwd", "unset"};
+	int			i;
 
 	i = 0;
 	while (i < 5)
