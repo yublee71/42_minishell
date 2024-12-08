@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:37:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 05:15:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	executor(t_ast *root, t_info *info)
 	int		status;
 
 	status = 0;
-	if (info->cmd_cnt == 1 && is_builtin(root->value) >= 0)
+	if (info->cmd_cnt == 1 && which_builtin(root->value) >= 0)
 		exec_builtin(root, info);
 	else
 		exec_pipex(root, info, &status);

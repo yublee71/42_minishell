@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 16:43:47 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_env(t_env **env_lst)
 	free(env_lst);
 }
 
-int	is_builtin(char *cmd)
+int	which_builtin(char *cmd)
 {
 	const char	*builtins[7] = {"cd", "echo", "env",
 		"exit", "export", "pwd", "unset"};

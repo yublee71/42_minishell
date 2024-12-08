@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:36:34 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	call_builtin(char **args, t_info *info) // combine to the set up function, s
 	int	i;
 	int	status;
 
-	i = is_builtin(args[0]);
+	i = which_builtin(args[0]);
 	status = -1;
 	if (i == 0)
 		status = ft_cd(args[1], info->env_lst);

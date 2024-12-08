@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 05:11:13 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	child_process(int i, t_ast *cmd_node, t_info *info)
 	args = cmd_node->args;
 	if (args == NULL)
 		exit_with_message(NULL, EXIT_SUCCESS, info);
-	if (is_builtin(args[0]) >= 0)
+	if (which_builtin(args[0]) >= 0)
 		exit_with_message(args[0], call_builtin(cmd_node->args, info), info);
 	cmd_path = get_cmd_path(args[0], info->env);
 	if (access(cmd_path, X_OK) < 0)
