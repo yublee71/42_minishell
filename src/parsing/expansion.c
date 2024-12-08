@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 03:06:06 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 03:12:08by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static char	*expand_str(char *new_str, char *var, size_t name_len)
 	var_len = 0;
 	if (var)
 		var_len = ft_strlen(var);
-	str = (char *)ft_malloc(head_len + var_len + tail_len + 1);
+	str = (char *)ft_calloc(head_len + var_len + tail_len + 1, 1);
 	if (!str)
 		exit(EXIT_FAILURE);
-	ft_strncat(str, new_str, head_len);
+	str = ft_strncat(str, new_str, head_len);
 	if (var)
-		ft_strncat(str, var, ft_strlen(var));
-	ft_strncat(str, new_str + head_len + 1 + name_len, tail_len);
+		str = ft_strncat(str, var, ft_strlen(var));
+	str = ft_strncat(str, new_str + head_len + 1 + name_len, tail_len);
 	return (str);
 }
 
@@ -51,7 +51,9 @@ static char	*expand_dollar_sign(char *value, t_env **env_lst)
 		name_len = 0;
 		dollar_str = ft_strchr(new_str, '$');
 		while (dollar_str[name_len] &&
-			!isspace(dollar_str[name_len]) && dollar_str[name_len] != '\'' && dollar_str[name_len] != '\"')
+			!isspace(dollar_str[name_len])
+			&& dollar_str[name_len] != '\''
+			&& dollar_str[name_len] != '\"')
 			name_len++;
 		name_len--;
 		if (!name_len)
@@ -69,7 +71,11 @@ static char	*expand_dollar_sign(char *value, t_env **env_lst)
 			current = current->next;
 		}
 		if (!current)
+		{
+			tmp = new_str;
 			new_str = expand_str(new_str, NULL, name_len);
+			free(tmp);
+		}
 	}
 	return (new_str);
 }
