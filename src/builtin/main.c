@@ -6,13 +6,12 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:24:25 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:36:34 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-// //TODO: modify
 int	call_builtin(char **args, t_info *info) // combine to the set up function, should be ready when first start the shell
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/08/15 15:26:32 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:43:23 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 // 		new[j++] = 0;
 // 	return (new);
 // }
-static char	*expand_if_dollar_sign(char *value, char **env)
+static char	*expand_if_dollar_sign(char *value, t_env **env)
 {
 	char	*str;
 
@@ -59,7 +59,7 @@ static char	*expand_if_dollar_sign(char *value, char **env)
 }
 
 //mask only single quote
-void	expand_env_var(t_list *token_list, char **env)
+void	expand_env_var(t_list *token_list, t_env **env)
 {
 	t_list	*node;
 	t_token	*token;
