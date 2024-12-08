@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:39:23 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 00:45:32 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (ft_strlen(cmd))
 			{
-				root = parser(cmd, env_lst);//TODO:env needs to be modified beforehand
+				root = parser(cmd, env_lst);
 				// ast_apply_infix(root, ast_print_node); //print tree
 				//free only when testing without execution
 				// free_array_until((void **)info.fds, info.cmd_cnt - 1);
