@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/08 17:13:22 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static char	*get_cmd_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
+	if (cmd[0] == '.')
+		return (cmd);
 	while (!ft_strnstr(env[i], "PATH=", 5))
 		i++;
 	path = ft_strnstr(env[i], "PATH=", 5) + 5;
