@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 00:10:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 01:04:38 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,32 @@ static char	*expand_str(char *new_str, size_t i, char *var, size_t name_len)
 	return (str);
 }
 
-char	*expand_var(t_env *env, size_t name_len, char *str, size_t i)
+static char	*expand_var(t_env *env, size_t name_len, char *s, size_t i, int status)
 {
 	char	*new_str;
 	char	*tmp;
+	char	*exp_str;
+	int		flag;
 
-	new_str = ft_strdup(str);
+	new_str = ft_strdup(s);
+	flag = 0;
 	if (env)
+		exp_str = env->var;
+	else if (s[i + 1] == '?')
 	{
-		tmp = new_str;
-		new_str = expand_str(str, i, env->var, name_len);
-		free(tmp);
+		exp_str = ft_itoa(status);
+		if (!exp_str)
+			exit(EXIT_FAILURE);
+		flag = 1;
 	}
 	else
-	{
-		tmp = new_str;
-		new_str = expand_str(str, i, NULL, name_len);
-		free(tmp);
-	}
-	free(str);
+		exp_str = NULL;
+	tmp = new_str;
+	new_str = expand_str(s, i, exp_str, name_len);
+	free(tmp);
+	free(s);
+	if (flag)
+		free(exp_str);
 	return (new_str);
 }
 
@@ -71,7 +78,7 @@ t_env	*search_name_in_env(t_env **env_lst, size_t name_len, char *str)
 	return (current);
 }
 
-static char	*expand_dollar_sign(char *str, t_env **env_lst)
+static char	*expand_dollar_sign(char *str, t_env **env_lst, int status)
 {
 	size_t	name_len;
 	size_t	i;
@@ -83,14 +90,19 @@ static char	*expand_dollar_sign(char *str, t_env **env_lst)
 		if (str[i++] == '$')
 		{
 			name_len = 0;
-			while (str[i + name_len] && !isspace(str[i + name_len])
-				&& str[i + name_len] != '\'' && str[i + name_len] != '\"')
-				name_len++;
+			if (str[i] == '?')
+				name_len = 1;
+			else
+			{
+				while (str[i + name_len] && !isspace(str[i + name_len])
+					&& str[i + name_len] != '\'' && str[i + name_len] != '\"')
+					name_len++;
+			}
 			if (name_len)
 			{
 				env = search_name_in_env(env_lst, name_len, str + i);
 				i--;
-				str = expand_var(env, name_len, str, i);
+				str = expand_var(env, name_len, str, i, status);
 				if (env)
 					i += ft_strlen(env->var);
 			}
@@ -100,7 +112,7 @@ static char	*expand_dollar_sign(char *str, t_env **env_lst)
 }
 
 //mask only single quote
-void	expand_env_var(t_list *token_list, t_env **env_lst)
+void	expand_env_var(t_list *token_list, t_env **env_lst, int status)
 {
 	t_list	*node;
 	t_token	*token;
@@ -114,7 +126,7 @@ void	expand_env_var(t_list *token_list, t_env **env_lst)
 		token = (t_token *)node->content;
 		single_q_masked_str = mask_single_quoted_part(token->value);
 		if (ft_strchr(single_q_masked_str, '$'))
-			token->value = expand_dollar_sign(token->value, env_lst);
+			token->value = expand_dollar_sign(token->value, env_lst, status);
 		free(single_q_masked_str);
 		node = node->next;
 	}

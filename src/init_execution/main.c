@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 23:32:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:42:08 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:44:15 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	count_pipe(t_ast *root)
 	return (cnt);
 }
 
-t_info	init_executor(t_ast *root, char **env, t_env **env_lst)
+t_info	init_executor(t_ast *root, char **env, t_env **env_lst, int *status)
 {
 	t_info	info;
 	int		pipe_cnt;
@@ -73,5 +73,6 @@ t_info	init_executor(t_ast *root, char **env, t_env **env_lst)
 	pipe_cnt = count_pipe(root);
 	info.cmd_cnt = pipe_cnt + 1;
 	info.fds = create_pipeline(pipe_cnt);
+	info.status = status;
 	return (info);
 }

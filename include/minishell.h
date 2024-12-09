@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:43:18 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,14 @@ typedef struct s_info
 	t_env	**env_lst;
 	int		**fds;
 	t_ast	*root;
+	int		*status;
 }	t_info;
 
 //parser
-t_ast	*parser(char *cmd, t_env **env_lst);
+t_ast	*parser(char *cmd, t_env **env_lst, int status);
 
 //execution initiation
-t_info	init_executor(t_ast *root, char **env, t_env **env_lst);
+t_info	init_executor(t_ast *root, char **env, t_env **env_lst, int *status);
 
 //execution
 void	executor(t_ast *root, t_info *info);

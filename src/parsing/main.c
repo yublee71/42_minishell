@@ -6,13 +6,13 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:18:56 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 00:41:35 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:44:54 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_ast	*parser(char *cmd, t_env **env_lst)
+t_ast	*parser(char *cmd, t_env **env_lst, int status)
 {
 	t_list	*token_list;
 	t_ast	*root;
@@ -29,7 +29,7 @@ t_ast	*parser(char *cmd, t_env **env_lst)
 		write(2, "Syntax error\n", ft_strlen("Syntax error\n"));
 		return (NULL);
 	}
-	expand_env_var(token_list, env_lst); //TODO
+	expand_env_var(token_list, env_lst, status); //TODO
 	ft_lstiter(token_list, remove_quotes);
 	root = build_tree(token_list);
 	ft_lstclear(&token_list, free);

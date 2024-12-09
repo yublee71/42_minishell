@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 05:21:41 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:59:17 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int argc, char **argv, char **env)
 	t_ast	*root;
 	char	*cmd;
 	t_env	**env_lst;
+	int		*status_store;
+	int		status;
 
 	(void)argc;
 	(void)argv;
@@ -31,6 +33,8 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	env_lst = get_env_lst(env);
+	status = 0;
+	status_store = &status;
 	while (1)
 	{
 		if (g_sigint_received)
@@ -43,14 +47,14 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (ft_strlen(cmd))
 			{
-				root = parser(cmd, env_lst);
+				root = parser(cmd, env_lst, *status_store);
 				// ast_apply_infix(root, ast_print_node); //print tree
 				//free only when testing without execution
 				// free_array_until((void **)info.fds, info.cmd_cnt - 1);
 				// ast_apply_suffix(root, ast_free_node);
 				if (root)
 				{
-					info = init_executor(root, env, env_lst);
+					info = init_executor(root, env, env_lst, status_store);
 					executor(root, &info);
 				}
 			}
