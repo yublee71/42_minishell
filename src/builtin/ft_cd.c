@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/08 00:57:25 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 01:43:58 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_cd(char *path_to_go, t_env **env_lst)
 		status = change_directory(path_to_go, env_lst);
 	if (status != 0)
 	{
-		printf("Error: cd\n");
+		write(2, "Error: cd\n", ft_strlen("Error: cd\n"));
 		return (1);
 	}
 	return (0);

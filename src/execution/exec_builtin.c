@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 01:29:40 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 03:30:45 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 01:29:58 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ void	exec_builtin(t_ast *cmd_node, t_info *info)
 {
 	set_stdin(-1, cmd_node, info);
 	set_stdout(-1, cmd_node, info);
-	call_builtin(cmd_node->args, info);
+	*(info->status) = call_builtin(cmd_node->args, info);
 }
