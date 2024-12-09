@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 20:28:35 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 21:19:39 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,48 +34,30 @@ static char	*expand_str(char *new_str, size_t i, char *var, size_t name_len)
 	return (str);
 }
 
-static char	*expand_var(t_env *env, size_t n_len, char *s, size_t i, int status)
+static char	*expand_var(t_env *env, char *s, size_t i, int status)
 {
 	char	*new_str;
-	char	*tmp;
 	char	*exp_str;
 	int		flag;
+	size_t	name_len;
 
-	new_str = ft_strdup(s);
 	flag = 0;
+	name_len = count_name_len(s, i + 1);
 	if (env)
 		exp_str = env->var;
 	else if (s[i + 1] == '?')
 	{
 		exp_str = ft_itoa(status);
-		if (!exp_str)
-			exit(EXIT_FAILURE);
 		flag = 1;
+		name_len = 1;
 	}
 	else
 		exp_str = NULL;
-	tmp = new_str;
-	new_str = expand_str(s, i, exp_str, n_len);
-	free(tmp);
+	new_str = expand_str(s, i, exp_str, name_len);
 	free(s);
 	if (flag)
 		free(exp_str);
 	return (new_str);
-}
-
-t_env	*search_name_in_env(t_env **env_lst, size_t name_len, char *str)
-{
-	t_env	*current;
-
-	current = *env_lst;
-	while (current)
-	{
-		if (name_len == ft_strlen(current->name)
-			&& !ft_strncmp(str, current->name, name_len))
-			break ;
-		current = current->next;
-	}
-	return (current);
 }
 
 static char	*expand_dollar_sign(char *str, t_env **env_lst, int status)
@@ -89,20 +71,15 @@ static char	*expand_dollar_sign(char *str, t_env **env_lst, int status)
 	{
 		if (str[i++] == '$')
 		{
-			name_len = 0;
 			if (str[i] == '?')
 				name_len = 1;
 			else
-			{
-				while (str[i + name_len] && !isspace(str[i + name_len])
-					&& str[i + name_len] != '\'' && str[i + name_len] != '\"')
-					name_len++;
-			}
+				name_len = count_name_len(str, i);
 			if (name_len)
 			{
 				env = search_name_in_env(env_lst, name_len, str + i);
 				i--;
-				str = expand_var(env, name_len, str, i, status);
+				str = expand_var(env, str, i, status);
 				if (env)
 					i += ft_strlen(env->var);
 			}
@@ -111,7 +88,7 @@ static char	*expand_dollar_sign(char *str, t_env **env_lst, int status)
 	return (str);
 }
 
-//mask only single quote
+//expands with/without double quotes, doesn't expand with single quotes
 void	expand_env_var(t_list *token_list, t_env **env_lst, int status)
 {
 	t_list	*node;
