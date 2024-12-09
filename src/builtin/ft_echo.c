@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:30:58 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/03 19:26:39 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:34:05 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,13 @@
 
 //check if there is -n, and return the index after the -n
 //or return 0 if there is not = can print out the str starting from index
-static int	check_newline_option(char *str)
+static int	check_newline_option(char *arg)
 {
-	int	i;
+	static char	*option = "-n";
 
-	i = 0;
-	if (str[0] == '-' && str[1] == 'n')
-	{
-		i++;
-		while (str[i] == 'n')
-			i++;
-		while (ft_isspace(str[i]))
-			i++;
-		return (i);
-	}
-	return (i);
+	if (arg && ft_strlen(arg) == 2 && !ft_strncmp(arg, option, 2))
+		return (1);
+	return (0);
 }
 
 //check if it has option -n : do not output the trailing newline
@@ -36,21 +28,23 @@ static int	check_newline_option(char *str)
 //if no, just print the following str
 // echo -n abcd -> abcd\n
 // echo xyz -> xyz
-int	ft_echo(char *str)
+int	ft_echo(char **args)
 {
-	int	i;
-	int	newline;
+	int		i;
+	int		newline_opt;
 
-	newline = 1; //default has to output trailing newline
-	i = check_newline_option(str);
-	if (i > 1)
-		newline = 0;
-	while (str[i])
-	{
-		ft_putchar_fd(str[i], 1);
+	i = 1;
+	newline_opt = check_newline_option(args[i]);
+	if (newline_opt)
 		i++;
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		i++;
+		if (args[i])
+			printf(" ");
 	}
-	if (newline)
-		ft_putchar_fd('\n', 1);
+	if (!newline_opt)
+		printf("\n");
 	return (0);
 }

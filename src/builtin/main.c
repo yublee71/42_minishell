@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 16:46:39 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:11:00 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	call_builtin(char **args, t_info *info) // combine to the set up function, s
 	if (i == 0)
 		status = ft_cd(args[1], info->env_lst);
 	else if (i == 1)
-		status = ft_echo(args[1]);
+		status = ft_echo(args);
 	else if (i == 2)
 		status = ft_env(info);
 	//TODO: include exit
