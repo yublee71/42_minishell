@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 00:59:17 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:21:00 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env(env_lst);
 	rl_clear_history();
+	return (*(info.status));
 }
