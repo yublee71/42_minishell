@@ -31,8 +31,8 @@ void	exit_with_message(char *str, int exit_no, t_info *info)
 			write(2, str, ft_strlen(str));
 			write(2, ": command not found\n", 20);
 		}
-		else if (exit_no)
-			perror(str);
+		else
+			write(2, str, ft_strlen(str));
 	}
 	free_before_exit(info, 0);
 	exit(exit_no);

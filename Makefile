@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/12/09 18:08:51 by yublee           ###   ########.fr        #
+#    Updated: 2024/12/09 20:08:10 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,8 @@ SRCS			= \
 					src/builtin/ft_pwd.c \
 					src/builtin/ft_unset.c \
 					src/builtin/ft_env.c \
+					src/builtin/ft_exit.c \
 					src/builtin/main.c \
-					# src/builtin/ft_exit.c \
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)
