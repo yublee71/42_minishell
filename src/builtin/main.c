@@ -6,13 +6,32 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 18:51:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:32:59 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	call_builtin(char **args, t_info *info) // combine to the set up function, should be ready when first start the shell
+int	which_builtin(char *cmd)
+{
+	const char	*builtins[7] = {"cd", "echo", "env",
+		"exit", "export", "pwd", "unset"};
+	int			i;
+
+	i = 0;
+	if (!cmd)
+		return (-1);
+	while (i < 7)
+	{
+		if (ft_strlen(cmd) == ft_strlen(builtins[i])
+			&& !ft_strncmp(cmd, builtins[i], ft_strlen(builtins[i])))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	call_builtin(char **args, t_info *info)
 {
 	int	i;
 	int	status;

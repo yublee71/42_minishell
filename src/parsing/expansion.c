@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 01:04:38 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:28:35 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*expand_str(char *new_str, size_t i, char *var, size_t name_len)
 	return (str);
 }
 
-static char	*expand_var(t_env *env, size_t name_len, char *s, size_t i, int status)
+static char	*expand_var(t_env *env, size_t n_len, char *s, size_t i, int status)
 {
 	char	*new_str;
 	char	*tmp;
@@ -55,7 +55,7 @@ static char	*expand_var(t_env *env, size_t name_len, char *s, size_t i, int stat
 	else
 		exp_str = NULL;
 	tmp = new_str;
-	new_str = expand_str(s, i, exp_str, name_len);
+	new_str = expand_str(s, i, exp_str, n_len);
 	free(tmp);
 	free(s);
 	if (flag)

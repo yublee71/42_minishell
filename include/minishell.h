@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 00:43:18 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:26:47 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	executor(t_ast *root, t_info *info);
 
 //built-in
 int		call_builtin(char **args, t_info *info);
+int		which_builtin(char *cmd);
 
 //tree utils
 void	ast_print_node(t_ast *node);
@@ -111,7 +112,6 @@ void	handle_sigint_heredoc(int sig);
 
 //env
 t_env	**get_env_lst(char **env);
-int		which_builtin(char *cmd);
 void	free_env(t_env **env_lst);
 
 #endif

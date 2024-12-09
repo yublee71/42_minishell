@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 16:49:48 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:27:17 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,6 @@ void	free_env(t_env **env_lst)
 		current = next;
 	}
 	free(env_lst);
-}
-
-int	which_builtin(char *cmd)
-{
-	const char	*builtins[7] = {"cd", "echo", "env",
-		"exit", "export", "pwd", "unset"};
-	int			i;
-
-	i = 0;
-	if (!cmd)
-		return (-1);
-	while (i < 7)
-	{
-		if (ft_strlen(cmd) == ft_strlen(builtins[i])
-			&& !ft_strncmp(cmd, builtins[i], ft_strlen(builtins[i])))
-			return (i);
-		i++;
-	}
-	return (-1);
 }
 
 static t_env	*ft_envlstlast(t_env *lst)
