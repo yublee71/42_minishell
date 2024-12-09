@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/12/08 00:23:48 by yublee           ###   ########.fr        #
+#    Updated: 2024/12/09 18:08:51 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS			= \
 					src/execution/main.c \
 					src/execution/stdin.c \
 					src/execution/stdout.c \
+					src/execution/heredoc.c \
 					src/utils/exit.c \
 					src/utils/utils_array.c \
 					src/utils/utils_token.c \
