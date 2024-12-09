@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/08 05:00:52 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 00:10:01 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*expand_str(char *new_str, size_t i, char *var, size_t name_len)
 	size_t	var_len;
 	char	*str;
 
-	head_len = i - 1;
+	head_len = i;
 	tail_len = ft_strlen(new_str) - head_len - 1 - name_len;
 	var_len = 0;
 	if (var)
@@ -89,6 +89,7 @@ static char	*expand_dollar_sign(char *str, t_env **env_lst)
 			if (name_len)
 			{
 				env = search_name_in_env(env_lst, name_len, str + i);
+				i--;
 				str = expand_var(env, name_len, str, i);
 				if (env)
 					i += ft_strlen(env->var);
