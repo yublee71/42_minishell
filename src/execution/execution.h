@@ -18,7 +18,6 @@
 void	child_process(int i, t_ast *cmd_node, t_info *info);
 void	exec_builtin(t_ast *cmd_node, t_info *info);
 void	set_stdin(int i, t_ast *cmd, t_info *info);
-void	handle_heredoc_input(char *delimiter, t_info *info);
 void	set_stdout(int i, t_ast *cmd, t_info *info);
 
 #endif

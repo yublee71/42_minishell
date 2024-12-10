@@ -101,6 +101,11 @@ void	expand_env_var(t_list *token_list, t_env **env_lst, int status)
 	while (node)
 	{
 		token = (t_token *)node->content;
+		if (token->type == TK_HEREDOC)
+		{
+			node = node->next->next;
+			continue;
+		}
 		single_q_masked_str = mask_single_quoted_part(token->value);
 		if (ft_strchr(single_q_masked_str, '$'))
 			token->value = expand_dollar_sign(token->value, env_lst, status);

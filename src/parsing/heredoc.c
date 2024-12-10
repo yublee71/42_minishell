@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "parsing.h"
 
 static void	add_random_str_to_str(char *buf, size_t size, char *s, size_t rand)
 {
@@ -63,7 +63,7 @@ static void	write_until_delimiter(int new_fd, char *delimiter)
 		free(buf);
 }
 
-void	handle_heredoc_input(char *delimiter, t_info *info)
+static int	get_heredoc_fd(char *delimiter)
 {
 	int		new_fd;
 	int		tty_fd;
@@ -75,16 +75,37 @@ void	handle_heredoc_input(char *delimiter, t_info *info)
 	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
 	tty_fd = open("/dev/tty", O_RDONLY);
 	if (tty_fd < 0 || new_fd < 0)
-		exit_with_message("open", EXIT_FAILURE, info);
+		exit(EXIT_FAILURE);
 	if (dup2(tty_fd, STDIN_FILENO) < 0)
-		exit_with_message("heredoc", EXIT_FAILURE, info);
+		exit(EXIT_FAILURE);
 	write_until_delimiter(new_fd, delimiter);
 	new_fd = open(filename, O_RDWR);
 	if (new_fd < 0)
-		exit_with_message("open", EXIT_FAILURE, info);
-	if (dup2(new_fd, STDIN_FILENO) < 0)
-		exit_with_message("heredoc", EXIT_FAILURE, info);
-	close(new_fd);
+		exit(EXIT_FAILURE);
 	close(tty_fd);
 	unlink(filename);
+	return (new_fd);
+}
+
+void	handle_heredoc_input(t_list *token_list)
+{
+	t_list	*node;
+	t_token	*token;
+	t_token	*token_next;
+
+	if (!token_list)
+		return ;
+	node = token_list;
+	while (node)
+	{
+		token = (t_token *)node->content;
+		if (token->type == TK_HEREDOC)
+		{
+			token_next = (t_token *)node->next->content;
+			token->heredoc_fd = get_heredoc_fd(token_next->value);
+		}
+		else
+			token->heredoc_fd = -1;
+		node = node->next;
+	}
 }

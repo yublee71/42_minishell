@@ -31,5 +31,6 @@ char	*mask_quoted_part(char *s);
 int		ft_isoperater(char c);
 size_t	count_name_len(char *str, size_t i);
 t_env	*search_name_in_env(t_env **env_lst, size_t name_len, char *str);
+void	handle_heredoc_input(t_list *token_list);
 
 #endif

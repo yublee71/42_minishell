@@ -21,7 +21,11 @@ static void	dup_redir_input_to_stdin_builtin(t_ast *in_node, t_info *info)
 	file_node = in_node->left;
 	fd_input = -1;
 	if (in_node->type == TK_HEREDOC)
-		handle_heredoc_input(file_node->value, info);
+	{
+		if (dup2(in_node->heredoc_fd, STDIN_FILENO) < 0)
+			exit_with_message("heredoc", EXIT_FAILURE, info);
+		close(in_node->heredoc_fd);
+	}
 	else if (in_node->type == TK_INPUT)
 	{
 		fd_input = open(file_node->value, O_RDONLY);
@@ -47,7 +51,11 @@ static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 	file_node = in_node->left;
 	fd_input = -1;
 	if (in_node->type == TK_HEREDOC)
-		handle_heredoc_input(file_node->value, info);
+	{
+		if (dup2(in_node->heredoc_fd, STDIN_FILENO) < 0)
+			exit_with_message("heredoc", EXIT_FAILURE, info);
+		close(in_node->heredoc_fd);
+	}
 	else if (in_node->type == TK_INPUT)
 	{
 		fd_input = open(file_node->value, O_RDONLY);

@@ -71,11 +71,13 @@ t_ast	*ast_new_node(t_token *token)
 	{
 		node->type = TK_WORD;
 		node->value = NULL;
+		node->heredoc_fd = token->heredoc_fd;
 	}
 	else
 	{
 		node->type = token->type;
 		node->value = token->value;
+		node->heredoc_fd = token->heredoc_fd;
 	}
 	return (node);
 }

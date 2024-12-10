@@ -44,6 +44,7 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	int				heredoc_fd;
 }	t_token;
 
 typedef struct s_env
@@ -61,6 +62,7 @@ typedef struct s_ast
 	t_token_type	type;
 	char			*value;
 	char			**args;
+	int				heredoc_fd;
 }	t_ast;
 
 typedef struct s_info

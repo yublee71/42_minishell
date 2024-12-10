@@ -12,23 +12,6 @@
 
 #include "execution.h"
 
-static void	wait_if_heredoc(t_ast *cmd_node, pid_t pid, int *status)
-{
-	t_ast	*tmp;
-
-	tmp = cmd_node->left;
-	while (tmp)
-	{
-		if (tmp->type == TK_HEREDOC)
-		{
-			waitpid(pid, status, 0);
-			return ;
-		}
-		tmp = tmp->left;
-	}
-	return ;
-}
-
 static void	close_pipe_for_parent(int i, t_info *info)
 {
 	if (i != 0)
@@ -55,7 +38,6 @@ static void	exec_pipex(t_ast *root, t_info *info, int *status)
 		pid = fork();
 		if (pid < 0)
 			exit_with_message("fork", EXIT_FAILURE, info);
-		wait_if_heredoc(cmd_node, pid, status);
 		if (pid == 0)
 			child_process(i, cmd_node, info);
 		close_pipe_for_parent(i, info);

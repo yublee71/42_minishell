@@ -30,6 +30,7 @@ t_ast	*parser(char *cmd, t_env **env_lst, int status)
 		return (NULL);
 	}
 	expand_env_var(token_list, env_lst, status);
+	handle_heredoc_input(token_list);
 	ft_lstiter(token_list, remove_quotes);
 	root = build_tree(token_list);
 	ft_lstclear(&token_list, free);

@@ -28,6 +28,7 @@ SRCS			= \
 					src/main.c \
 					src/parsing/build_tree.c \
 					src/parsing/expansion.c \
+					src/parsing/heredoc.c \
 					src/parsing/main.c \
 					src/parsing/post_syntax_validation.c \
 					src/parsing/pre_syntax_validation.c \
@@ -42,7 +43,6 @@ SRCS			= \
 					src/execution/main.c \
 					src/execution/stdin.c \
 					src/execution/stdout.c \
-					src/execution/heredoc.c \
 					src/utils/exit.c \
 					src/utils/utils_array.c \
 					src/utils/utils_token.c \
