@@ -16,7 +16,7 @@ static char *ft_get_parent_path(char *str)
 {
     int i = 0;
     int last_slash = -1;
-    char *parentpath;
+    // char *parentpath;
 
     while (str[i])
     {
@@ -29,28 +29,28 @@ static char *ft_get_parent_path(char *str)
     return (ft_substr(str, 0, last_slash));
 }
 
-static void update_env(char *new_path, t_env **env_lst)
-{
-    t_env *current = *env_lst;
-    t_env *temp_pwd = NULL;
-    t_env *temp_oldpwd = NULL;
+// static void update_env(char *new_path, t_env **env_lst)
+// {
+//     t_env *current = *env_lst;
+//     t_env *temp_pwd = NULL;
+//     t_env *temp_oldpwd = NULL;
 
-    while (current)
-    {
-        if (ft_strcmp(current->name, "PWD") == 0)
-            temp_pwd = current;
-        else if (ft_strcmp(current->name, "OLDPWD") == 0)
-            temp_oldpwd = current;
-        current = current->next;
-    }
-    if (temp_pwd && temp_oldpwd)
-    {
-        free(temp_oldpwd->var);
-        temp_oldpwd->var = ft_strdup(temp_pwd->var); 
-        free(temp_pwd->var);
-        temp_pwd->var = ft_strdup(new_path);
-    }
-}
+//     while (current)
+//     {
+//         if (ft_strncmp(current->name, "PWD") == 0)
+//             temp_pwd = current;
+//         else if (ft_strncmp(current->name, "OLDPWD") == 0)
+//             temp_oldpwd = current;
+//         current = current->next;
+//     }
+//     if (temp_pwd && temp_oldpwd)
+//     {
+//         free(temp_oldpwd->var);
+//         temp_oldpwd->var = ft_strdup(temp_pwd->var); 
+//         free(temp_pwd->var);
+//         temp_pwd->var = ft_strdup(new_path);
+//     }
+// }
 
 static int	change_directory(char *path, t_env **env_lst)
 {
@@ -83,9 +83,10 @@ static int	change_directory(char *path, t_env **env_lst)
 // TODO: error control 
 // TODO: set the update the OLDPWD to PWD
 //                          PWD to path_to_go 
-int	ft_cd(char *path_to_go, t_env **env_lst)
+int	ft_cd(char **args, t_env **env_lst)
 {
 	int		status;
+	char	*path_to_go;
 	// t_env	*current;
 
 	// printf("to go:%s\n", path_to_go);
@@ -96,6 +97,12 @@ int	ft_cd(char *path_to_go, t_env **env_lst)
 	// 	printf("val:%s\n",current->var);
 	// 	current = current->next;
 	// }
+	if (array_size((void **)args) != 2)
+	{
+		write(2, "cd: too many arguments\n", ft_strlen("cd: too many arguments\n"));
+		return (1);
+	}
+	path_to_go = args[1];
 	if (path_to_go == NULL)
 		status = change_directory("HOME", env_lst);
 	else if (!ft_strncmp(path_to_go, "..", 2))
@@ -104,7 +111,10 @@ int	ft_cd(char *path_to_go, t_env **env_lst)
 		status = change_directory(path_to_go, env_lst);
 	if (status != 0)
 	{
-		write(2, "Error: cd\n", ft_strlen("Error: cd\n"));
+		write(2, "cd: ", ft_strlen("cd :"));
+		write(2, path_to_go, ft_strlen(path_to_go));
+		write(2, ": No such file or directory\n",
+			ft_strlen(": No such file or directory\n"));
 		return (1);
 	}
 	return (0);

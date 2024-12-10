@@ -39,7 +39,7 @@ int	call_builtin(char **args, t_info *info)
 	i = which_builtin(args[0]);
 	status = -1;
 	if (i == 0)
-		status = ft_cd(args[1], info->env_lst);
+		status = ft_cd(args, info->env_lst);
 	else if (i == 1)
 		status = ft_echo(args);
 	else if (i == 2)

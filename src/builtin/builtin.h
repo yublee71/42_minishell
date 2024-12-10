@@ -15,7 +15,7 @@
 
 # include "../../include/minishell.h"
 
-int	ft_cd(char *path_to_go, t_env **env_lst);
+int	ft_cd(char **args, t_env **env_lst);
 int	ft_echo(char **args);
 int	ft_export(char **env);
 int	ft_pwd(void);
