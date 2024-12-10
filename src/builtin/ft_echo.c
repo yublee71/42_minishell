@@ -28,7 +28,7 @@ static int	check_newline_option(char *arg)
 //if no, just print the following str
 // echo -n abcd -> abcd\n
 // echo xyz -> xyz
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_info *info)
 {
 	int		i;
 	int		newline_opt;
@@ -46,5 +46,7 @@ int	ft_echo(char **args)
 	}
 	if (!newline_opt)
 		printf("\n");
+	if (*(info->status))
+		return (1);
 	return (0);
 }

@@ -41,7 +41,7 @@ int	call_builtin(char **args, t_info *info)
 	if (i == 0)
 		status = ft_cd(args, info->env_lst);
 	else if (i == 1)
-		status = ft_echo(args);
+		status = ft_echo(args, info);
 	else if (i == 2)
 		status = ft_env(info);
 	else if (i == 3)

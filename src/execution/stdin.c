@@ -30,6 +30,7 @@ static void	dup_redir_input_to_stdin_builtin(t_ast *in_node, t_info *info)
 			write(2, file_node->value, ft_strlen(file_node->value));
 			write(2, err_msg, ft_strlen(err_msg));
 			*(info->status) = 127;
+			return ;
 		}
 		else if (dup2(fd_input, STDIN_FILENO) < 0)
 			exit_with_message(file_node->value, EXIT_FAILURE, info);
