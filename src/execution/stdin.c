@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 18:12:56 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/10 21:12:46 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,29 @@ static void	dup_redir_input_to_stdin_builtin(t_ast *in_node, t_info *info)
 {
 	int			fd_input;
 	t_ast		*file_node;
-	const char	*err_msg = ": No such file or directory\n";
+	char		*err_msg;
 
 	file_node = in_node->left;
-	fd_input = -1;
-	if (in_node->type == TK_HEREDOC)
-	{
-		if (dup2(in_node->heredoc_fd, STDIN_FILENO) < 0)
-			exit_with_message("heredoc", EXIT_FAILURE, info);
-		close(in_node->heredoc_fd);
-	}
-	else if (in_node->type == TK_INPUT)
-	{
+	if (in_node->type != TK_HEREDOC && in_node->type != TK_INPUT)
+		return ;
+	err_msg = ": No such file or directory\n";
+	if (in_node->type == TK_INPUT)
 		fd_input = open(file_node->value, O_RDONLY);
-		if (fd_input < 0)
-		{
-			write(2, file_node->value, ft_strlen(file_node->value));
-			write(2, err_msg, ft_strlen(err_msg));
-			*(info->status) = 127;
-			return ;
-		}
-		else if (dup2(fd_input, STDIN_FILENO) < 0)
-			exit_with_message(file_node->value, EXIT_FAILURE, info);
-		else
-			close(fd_input);
+	else if (in_node->type == TK_HEREDOC)
+	{
+		fd_input = in_node->heredoc_fd;
+		err_msg = "heredoc";
 	}
+	if (fd_input < 0)
+	{
+		write(2, file_node->value, ft_strlen(file_node->value));
+		write(2, err_msg, ft_strlen(err_msg));
+		*(info->status) = 127;
+		return ;
+	}
+	else if (dup2(fd_input, STDIN_FILENO) < 0)
+		exit_with_message(file_node->value, EXIT_FAILURE, info);
+	close(fd_input);
 }
 
 static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)

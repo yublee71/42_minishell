@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:55:53 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 22:23:19 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/10 21:15:38 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	exit_with_message(char *str, int exit_no, t_info *info)
 			write(2, str, ft_strlen(str));
 			write(1, "\n", 1);
 		}
-
 	}
 	free_before_exit(info, 0);
 	exit(exit_no);
