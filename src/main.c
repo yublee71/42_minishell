@@ -14,7 +14,7 @@
 
 int	g_sigint_received = 0;
 
-int	event(void) { 
+static int	event(void) { 
 	return (0);
 }
 
@@ -29,7 +29,10 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	rl_event_hook = event;
+	if (isatty(STDIN_FILENO))
+		rl_event_hook = event;
+	else
+		rl_event_hook = NULL;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	env_lst = get_env_lst(env);
@@ -49,9 +52,6 @@ int	main(int argc, char **argv, char **env)
 			{
 				root = parser(cmd, env_lst, *status_store);
 				// ast_apply_infix(root, ast_print_node); //print tree
-				//free only when testing without execution
-				// free_array_until((void **)info.fds, info.cmd_cnt - 1);
-				// ast_apply_suffix(root, ast_free_node);
 				if (root)
 				{
 					info = init_executor(root, env, env_lst, status_store);
