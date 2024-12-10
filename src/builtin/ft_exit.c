@@ -50,7 +50,7 @@ int	ft_exit(char **args, t_info *info)
 		}
 		else if (args[1])
 		{
-			err_msg = "exit: numberic argument required\n";
+			err_msg = "exit: numeric argument required\n";
 			exit_status = 2;
 		}
 		exit_with_message(err_msg, exit_status, info);
