@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/11 17:01:54 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:46:35 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	update_pwd(t_env **env_lst)
 {
 	t_env	*current;
 	char	*temp;
+	char	*temp2;
 
 	current = *env_lst;
 	while (current)
@@ -45,7 +46,17 @@ static void	update_pwd(t_env **env_lst)
 	}
 	temp = current->var;
 	current->var = getcwd(NULL, 0);
-	free(temp);
+	current = *env_lst;
+	while (current)
+	{
+		if (ft_strlen(current->name) == 6
+			&& !ft_strncmp(current->name, "OLDPWD", 6))
+			break ;
+		current = current->next;
+	}
+	temp2 = current->var;
+	current->var = temp;
+	free(temp2);
 }
 
 static int	change_directory(char *path, t_env **env_lst)
