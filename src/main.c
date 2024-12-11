@@ -14,19 +14,24 @@
 
 int	g_sigint_received = 0;
 
-int	main()
+static void	parse_and_execute(char *cmd, t_env **env_lst, int *status_stored)
 {
-	t_info	info;
 	t_ast	*root;
-	char	*cmd;
-	t_env	**env_lst;
-	int		*status_store;
-	int		status;
+	t_info	info;
 
-	setup_signal();
-	env_lst = get_env_lst(environ);
-	status = 0;
-	status_store = &status;
+	root = parser(cmd, env_lst, *status_stored);
+	// ast_apply_infix(root, ast_print_node); //print tree
+	if (root)
+	{
+		info = init_executor(root, environ, env_lst, status_stored);
+		executor(root, &info);
+	}
+}
+
+static void	minishell(t_env **env_lst, int *status_stored)
+{
+	char	*cmd;
+
 	while (1)
 	{
 		if (g_sigint_received)
@@ -35,20 +40,9 @@ int	main()
 			continue;
 		}
 		cmd = readline("minishell$ ");
-		if (cmd)
-		{
-			if (ft_strlen(cmd))
-			{
-				root = parser(cmd, env_lst, *status_store);
-				// ast_apply_infix(root, ast_print_node); //print tree
-				if (root)
-				{
-					info = init_executor(root, environ, env_lst, status_store);
-					executor(root, &info);
-				}
-			}
-		}
-		else
+		if (cmd && ft_strlen(cmd))
+			parse_and_execute(cmd, env_lst, status_stored);
+		else if (!cmd)
 		{
 			printf("exit\n");
 			break ;
@@ -56,7 +50,20 @@ int	main()
 		add_history(cmd);
 		free(cmd);
 	}
+}
+
+int	main()
+{
+	t_env	**env_lst;
+	int		*status_stored;
+	int		status;
+
+	setup_signal();
+	env_lst = get_env_lst(environ);
+	status = 0;
+	status_stored = &status;
+	minishell(env_lst, status_stored);
 	free_env(env_lst);
 	rl_clear_history();
-	return (*(info.status));
+	return (*status_stored);
 }
