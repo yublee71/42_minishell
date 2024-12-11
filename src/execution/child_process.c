@@ -59,7 +59,7 @@ static char	*get_cmd_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	if (cmd[0] == '.')
+	if (cmd[0] == '.' || cmd[0] == '/')
 		return (cmd);
 	while (!ft_strnstr(env[i], "PATH=", 5))
 		i++;
@@ -72,8 +72,9 @@ static char	*get_cmd_path(char *cmd, char **env)
 
 void	child_process(int i, t_ast *cmd_node, t_info *info)
 {
-	char	**args;
-	char	*cmd_path;
+	char		**args;
+	char		*cmd_path;
+	struct stat	path_stat;
 
 	set_stdin(i, cmd_node, info);
 	set_stdout(i, cmd_node, info);
@@ -84,9 +85,14 @@ void	child_process(int i, t_ast *cmd_node, t_info *info)
 		exit_with_message(NULL, EXIT_SUCCESS, info);
 	if (which_builtin(args[0]) >= 0)
 		exit_with_message("", call_builtin(cmd_node->args, info), info);
-	cmd_path = get_cmd_path(args[0], info->env);
+	cmd_path = get_cmd_path(args[0], environ);
+	if ((ft_strlen(cmd_path) == 1 && cmd_path[0] == '.')
+		|| (ft_strlen(cmd_path) == 2 && !ft_strncmp(cmd_path, "..", 2)))
+		exit_with_message("Error\n", 2, info);
 	if (access(cmd_path, X_OK) < 0)
 		exit_with_message(args[0], 127, info);
-	if (execve(cmd_path, args, info->env) == -1)
-		exit_with_message("execve", EXIT_FAILURE, info);
+	if (!stat(cmd_path, &path_stat) && S_ISDIR(path_stat.st_mode))
+		exit_with_message(cmd_path, 126, info);
+	if (execve(cmd_path, args, environ) == -1)
+		exit_with_message(NULL, EXIT_FAILURE, info);
 }

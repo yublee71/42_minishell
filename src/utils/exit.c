@@ -24,11 +24,22 @@ void	free_before_exit(t_info *info, int is_parent_process)
 
 void	exit_with_message(char *str, int exit_no, t_info *info)
 {
+	char	*err_msg;
+
 	if (str && exit_no == 127)
 	{
+		err_msg = ": command not found\n";
 		write(2, str, ft_strlen(str));
-		write(2, ": command not found\n", 20);
+		write(2, err_msg, ft_strlen(err_msg));
 	}
+	else if (str && exit_no == 126)
+	{
+		err_msg = ": Is a directory\n";
+		write(2, str, ft_strlen(str));
+		write(2, err_msg, ft_strlen(err_msg));
+	}
+	else if (str)
+		write(2, str, ft_strlen(str));
 	else if (!str && errno)
 		perror(NULL);
 	free_before_exit(info, 0);
