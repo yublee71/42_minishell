@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 21:53:59 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/02 23:56:54 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 00:47:54 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	handle_sigint_heredoc(int sig)
 	rl_done = 1;
 }
 
-static int	event(void) { 
+static int	event(void)
+{
 	return (0);
 }
 

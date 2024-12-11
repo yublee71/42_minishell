@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 21:29:35 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 21:19:39 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 00:48:28 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	expand_env_var(t_list *token_list, t_env **env_lst, int status)
 		if (token->type == TK_HEREDOC)
 		{
 			node = node->next->next;
-			continue;
+			continue ;
 		}
 		single_q_masked_str = mask_single_quoted_part(token->value);
 		if (ft_strchr(single_q_masked_str, '$'))

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 20:21:00 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 00:47:06 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	minishell(t_env **env_lst, int *status_stored)
 		if (g_sigint_received)
 		{
 			g_sigint_received = 0;
-			continue;
+			continue ;
 		}
 		cmd = readline("minishell$ ");
 		if (cmd && ft_strlen(cmd))
@@ -52,7 +52,7 @@ static void	minishell(t_env **env_lst, int *status_stored)
 	}
 }
 
-int	main()
+int	main(void)
 {
 	t_env	**env_lst;
 	int		*status_stored;
