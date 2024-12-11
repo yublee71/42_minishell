@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/11 16:59:18 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:30:27 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*join_cmd_to_path(char *cmd, char **paths)
 	return (cmd);
 }
 
-static char	*get_cmd_path(char *cmd, char **env)
+static char	*get_cmd_path(char *cmd, t_info *info)
 {
 	char	*path;
 	char	**paths;
@@ -45,11 +45,11 @@ static char	*get_cmd_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	if (cmd[0] == '.' || cmd[0] == '/')
+	if (cmd[0] == '.' || cmd[0] == '/' || !*info->env_lst)
 		return (cmd);
-	while (!ft_strnstr(env[i], "PATH=", 5))
+	while (!ft_strnstr(info->env[i], "PATH=", 5))
 		i++;
-	path = ft_strnstr(env[i], "PATH=", 5) + 5;
+	path = ft_strnstr(info->env[i], "PATH=", 5) + 5;
 	paths = ft_split(path, ':');
 	cmd_path = join_cmd_to_path(cmd, paths);
 	free_array((void **)paths);
@@ -81,7 +81,7 @@ void	child_process(int i, t_ast *cmd_node, t_info *info)
 		exit_with_message(NULL, EXIT_SUCCESS, info);
 	if (which_builtin(args[0]) >= 0)
 		exit_with_message("", call_builtin(cmd_node->args, info), info);
-	cmd_path = get_cmd_path(args[0], environ);
+	cmd_path = get_cmd_path(args[0], info);
 	if ((ft_strlen(cmd_path) == 1 && cmd_path[0] == '.')
 		|| (ft_strlen(cmd_path) == 2 && !ft_strncmp(cmd_path, "..", 2)))
 		exit_with_message("filename argument required\n", 2, info);
