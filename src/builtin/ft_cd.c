@@ -84,12 +84,14 @@ static int	change_directory_by_path(char *path, t_env **env_lst)
 	return (status);
 }
 
-int	ft_cd(char **args, t_env **env_lst)
+int	ft_cd(char **args, t_info *info)
 {
 	int		status;
 	char	*path_to_go;
 	char	*err_msg;
 
+	if (!*info->env_lst)
+		return (0);
 	if (array_size((void **)args) > 2)
 	{
 		err_msg = "cd: too many arguments\n";
@@ -98,11 +100,11 @@ int	ft_cd(char **args, t_env **env_lst)
 	}
 	path_to_go = args[1];
 	if (path_to_go == NULL)
-		status = change_directory("HOME", env_lst);
+		status = change_directory("HOME", info->env_lst);
 	else if (ft_strlen(path_to_go) == 2 && !ft_strncmp(path_to_go, "..", 2))
-		status = change_directory("PWD", env_lst);
+		status = change_directory("PWD", info->env_lst);
 	else
-		status = change_directory_by_path(path_to_go, env_lst);
+		status = change_directory_by_path(path_to_go, info->env_lst);
 	if (status != 0)
 	{
 		err_msg = ": No such file or directory\n";
