@@ -15,13 +15,10 @@
 
 # include "../../include/minishell.h"
 
-int		ft_cd(int argc, char **argv, t_env **env_arr);
-int		ft_echo(char *str);
-int		ft_env(t_env **env_arr, t_info *info);
-int		ft_export(char **env);
-int		ft_pwd(void);
-int		ft_unset(char *name, t_env **env_arr);
-int		ft_exit(int argc, char **argv, t_info *info);
-
+int	ft_cd(char *path_to_go, char **env);
+int	ft_echo(char *str);
+int	ft_export(char **env);
+int	ft_pwd(void);
+int	ft_unset(char *name, t_env **env_arr);
 
 #endif
