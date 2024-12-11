@@ -14,11 +14,7 @@
 
 int	g_sigint_received = 0;
 
-static int	event(void) { 
-	return (0);
-}
-
-int	main(int argc, char **argv, char **env)
+int	main()
 {
 	t_info	info;
 	t_ast	*root;
@@ -27,15 +23,8 @@ int	main(int argc, char **argv, char **env)
 	int		*status_store;
 	int		status;
 
-	(void)argc;
-	(void)argv;
-	if (isatty(STDIN_FILENO))
-		rl_event_hook = event;
-	else
-		rl_event_hook = NULL;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	env_lst = get_env_lst(env);
+	setup_signal();
+	env_lst = get_env_lst(environ);
 	status = 0;
 	status_store = &status;
 	while (1)
@@ -54,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 				// ast_apply_infix(root, ast_print_node); //print tree
 				if (root)
 				{
-					info = init_executor(root, env, env_lst, status_store);
+					info = init_executor(root, environ, env_lst, status_store);
 					executor(root, &info);
 				}
 			}

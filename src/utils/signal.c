@@ -28,3 +28,17 @@ void	handle_sigint_heredoc(int sig)
 	g_sigint_received = 1;
 	rl_done = 1;
 }
+
+static int	event(void) { 
+	return (0);
+}
+
+void	setup_signal(void)
+{
+	if (isatty(STDIN_FILENO))
+		rl_event_hook = event;
+	else
+		rl_event_hook = NULL;
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+}
