@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 01:36:28 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:59:18 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ static char	*get_cmd_path(char *cmd, char **env)
 	return (cmd_path);
 }
 
+static void	handle_error_case(char *cmd_path, t_info *info)
+{
+	if (errno == 13)
+		exit_with_message(NULL, 126, info);
+	else if (cmd_path[0] == '.' || cmd_path[0] == '/')
+		exit_with_message(NULL, 127, info);
+	else
+		exit_with_message(cmd_path, 127, info);
+}
+
 void	child_process(int i, t_ast *cmd_node, t_info *info)
 {
 	char		**args;
@@ -76,14 +86,7 @@ void	child_process(int i, t_ast *cmd_node, t_info *info)
 		|| (ft_strlen(cmd_path) == 2 && !ft_strncmp(cmd_path, "..", 2)))
 		exit_with_message("filename argument required\n", 2, info);
 	if (access(cmd_path, X_OK) < 0)
-	{
-		if (errno == 13)
-			exit_with_message(NULL, 126, info);
-		else if (cmd_path[0] == '.' || cmd_path[0] == '/')
-			exit_with_message(NULL, 127, info);
-		else
-			exit_with_message(cmd_path, 127, info);
-	}
+		handle_error_case(cmd_path, info);
 	if (!stat(cmd_path, &path_stat) && S_ISDIR(path_stat.st_mode))
 		exit_with_message(cmd_path, 126, info);
 	if (execve(cmd_path, args, environ) == -1)
