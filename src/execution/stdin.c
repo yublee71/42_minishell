@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/10 21:12:46 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:45:40 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	dup_redir_input_to_stdin_builtin(t_ast *in_node, t_info *info)
 	if (in_node->type != TK_HEREDOC && in_node->type != TK_INPUT)
 		return ;
 	err_msg = ": No such file or directory\n";
+	fd_input = -1;
 	if (in_node->type == TK_INPUT)
 		fd_input = open(file_node->value, O_RDONLY);
 	else if (in_node->type == TK_HEREDOC)
