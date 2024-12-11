@@ -23,8 +23,14 @@ static void	dup_redir_output_to_stdout(t_ast *out_node, t_info *info)
 		fd_output = open(file_node->value, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	else if (out_node->type == TK_APPEND)
 		fd_output = open(file_node->value, O_WRONLY | O_APPEND | O_CREAT, 0666);
-	if (fd_output < 0 || dup2(fd_output, STDOUT_FILENO) < 0)
-		exit_with_message(file_node->value, EXIT_FAILURE, info);
+	if (fd_output < 0)
+	{
+		write(2, file_node->value, ft_strlen(file_node->value));
+		write(2, ": ", 2);
+		exit_with_message(NULL, EXIT_FAILURE, info);
+	}
+	if (dup2(fd_output, STDOUT_FILENO) < 0)
+		exit_with_message("dup2", EXIT_FAILURE, info);
 	close(fd_output);
 }
 
