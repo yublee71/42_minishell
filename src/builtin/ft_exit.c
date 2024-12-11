@@ -34,11 +34,9 @@ int	ft_exit(char **args, t_info *info)
 {
 	int		exit_status;
 	int		arg_size;
-	char	*err_msg;
 
 	printf("exit\n");
 	arg_size = array_size((void **)args);
-	err_msg = NULL;
 	exit_status = 0;
 	if (arg_size == 1 || arg_size == 2)
 	{
@@ -50,10 +48,10 @@ int	ft_exit(char **args, t_info *info)
 		}
 		else if (args[1])
 		{
-			err_msg = "exit: numeric argument required\n";
+			write(2, "exit: numeric argument required\n", 32);
 			exit_status = 2;
 		}
-		exit_with_message(err_msg, exit_status, info);
+		exit_with_message(NULL, exit_status, info);
 	}
 	write(2, "exit: too many arguments\n", 25);
 	return (1);

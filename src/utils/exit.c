@@ -24,20 +24,13 @@ void	free_before_exit(t_info *info, int is_parent_process)
 
 void	exit_with_message(char *str, int exit_no, t_info *info)
 {
-	if (str)
+	if (str && exit_no == 127)
 	{
-		if (exit_no == 127)
-		{
-			write(2, str, ft_strlen(str));
-			write(2, ": command not found\n", 20);
-		}
-		else
-		{
-			write(2, "Error: ", 7);
-			write(2, str, ft_strlen(str));
-			write(1, "\n", 1);
-		}
+		write(2, str, ft_strlen(str));
+		write(2, ": command not found\n", 20);
 	}
+	else if (!str && errno)
+		perror(NULL);
 	free_before_exit(info, 0);
 	exit(exit_no);
 }

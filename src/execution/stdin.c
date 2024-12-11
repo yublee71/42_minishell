@@ -45,7 +45,6 @@ static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 {
 	int			fd_input;
 	t_ast		*file_node;
-	const char	*err_msg = ": No such file or directory\n";
 
 	file_node = in_node->left;
 	fd_input = -1;
@@ -61,7 +60,7 @@ static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 		if (fd_input < 0 || dup2(fd_input, STDIN_FILENO) < 0)
 		{
 			write(2, file_node->value, ft_strlen(file_node->value));
-			write(2, err_msg, ft_strlen(err_msg));
+			write(2, ": ", 2);
 			exit_with_message(NULL, EXIT_FAILURE, info);
 		}
 		close(fd_input);
