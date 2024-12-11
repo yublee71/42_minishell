@@ -26,6 +26,22 @@ static char	first_char(char *str)
 	return (str[i]);
 }
 
+static char	last_char(char *str)
+{
+	size_t	i;
+	size_t	len;
+
+	len = ft_strlen(str);
+	i = len - 1;
+	while (i > 0 && str[i] == ' ')
+	{
+		i--;
+		if (!i)
+			break ;
+	}
+	return (str[i]);
+}
+
 static int	balance_check(char *str)
 {
 	size_t	len;
@@ -53,7 +69,8 @@ static int	balance_check(char *str)
 
 int	pre_syntax_validation(char *cmd)
 {
-	if (first_char(cmd) == '|' || balance_check(cmd) < 0)
+	if (first_char(cmd) == '|' || balance_check(cmd) < 0
+		|| last_char(cmd) == '|')
 		return (-1); //TODO: add last char?
 	return (0);
 }
