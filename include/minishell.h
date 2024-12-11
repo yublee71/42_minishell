@@ -110,7 +110,6 @@ void	exit_with_message(char *str, int exit_no, t_info *info);
 void	free_before_exit(t_info *info, int is_parent_process);
 
 //signal
-void	handle_sigint(int sig);
 void	handle_sigint_heredoc(int sig);
 void	setup_signal(void);
 
