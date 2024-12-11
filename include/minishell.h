@@ -116,6 +116,7 @@ void	setup_signal(void);
 
 //env
 t_env	**get_env_lst(char **env);
+void	ft_envadd_back(t_env **lst, t_env *new);
 void	free_env(t_env **env_lst);
 
 #endif

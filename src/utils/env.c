@@ -38,7 +38,7 @@ static t_env	*ft_envlstlast(t_env *lst)
 	return (lst);
 }
 
-static void	ft_envadd_back(t_env **lst, t_env *new)
+void	ft_envadd_back(t_env **lst, t_env *new)
 {
 	t_env	*last;
 

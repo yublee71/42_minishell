@@ -47,7 +47,7 @@ int	call_builtin(char **args, t_info *info)
 	else if (i == 3)
 		status = ft_exit(args, info);
 	else if (i == 4)
-		status = ft_export(info->env);
+		status = ft_export(args, info->env_lst);
 	else if (i == 5)
 		status = ft_pwd();
 	else if (i == 6)

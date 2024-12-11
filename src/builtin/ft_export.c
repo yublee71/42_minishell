@@ -12,92 +12,100 @@
 
 #include "builtin.h"
 
-static void	initindex(int **indexarr, int count)
+static t_env	*find_name_in_env(char *name, size_t name_len, t_env **env_lst)
 {
-	int	i;
+	t_env	*current;
+
+	current = *env_lst;
+	while (current)
+	{
+		if (name_len == ft_strlen(current->name)
+			&& !ft_strncmp(name, current->name, name_len))
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+int	invalid_name(char *name)
+{
+	size_t	i;
 
 	i = 0;
-	while (i < count)
+	if (!ft_strlen(name) || (name[0] >= '0' && name[0] <= '9'))
+		return (1);
+	while (name[i])
 	{
-		*indexarr[i] = i;
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (1);
 		i++;
 	}
-	*indexarr[i] = -42;
-}
-
-static int	count_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
-}
-
-static int	find_first_nonuse(int *indexarr)
-{
-	int	i;
-
-	i = 0;
-	while (indexarr[i] != -42)
-	{
-		if (indexarr[i] != -1)
-		{
-			indexarr[i] = -1;
-			return (i);
-		}
-		i++;
-	}
-	return (i);
-}
-
-static char	**ft_sort_env(char **env, int *indexarr, char **sortedarr, int env_len)
-{
-	int		i;
-	int		j;
-	char	*first_env;
-	int		first_index;
-
-	i = 0;
-	j = 0;
-	while (i < env_len)
-	{
-		first_index = find_first_nonuse(indexarr);
-		first_env = env[first_index];
-		j = 0;
-		while (j < env_len)
-		{
-			if (indexarr[j] != -1)
-			{
-				if ((ft_strncmp(first_env, env[indexarr[j]], ft_strlen(first_env))) > 0)
-				{
-					first_env = env[indexarr[j]];
-					first_index = j;
-				}
-			}
-			j++;
-		}
-		sortedarr[i] = first_env;
-		indexarr[first_index] = -1;
-		i++;
-	}
-	sortedarr[j] = NULL;
-	return (sortedarr);
-}
-
-int	ft_export(char **env)
-{
-	int		count;
-	int		*indexarr; // keep track on the sorted env, if already allocated to the right place, will update to -1 e.g. [0,1,2,3,4,5,-1,7,-1]
-	char	**sortedarr;
-
-	count = count_env(env);
-	indexarr = malloc(sizeof(int) * (count + 1));
-	sortedarr = malloc(sizeof(char *) * (count + 1));
-	if (!indexarr || !sortedarr)
-		exit(EXIT_FAILURE);
-	initindex(&indexarr, count);
-	sortedarr = ft_sort_env(env, indexarr, sortedarr, count);
 	return (0);
+}
+
+static void	modify_env(char *name, char *var, size_t name_len, t_env **env_lst)
+{
+	t_env	*env;
+	char	*tmp;
+
+	env = find_name_in_env(name, name_len, env_lst);
+	var++;
+	if (env)
+	{
+		tmp = env->var;
+		env->var= ft_strdup(var);
+		free(tmp);
+	}
+	else
+	{
+		env = (t_env *)malloc(sizeof(t_env));
+		if (!env)
+			exit(EXIT_FAILURE);
+		env->name = ft_strdup(name);
+		env->var = ft_strdup(var);
+		env->next = NULL;
+		ft_envadd_back(env_lst, env);
+	}
+}
+
+static int	export_arg(char *arg, t_env **env_lst)
+{
+	char	*name;
+	char	*var;
+	size_t	name_len;
+	char	*err_msg;
+
+	var = ft_strchr(arg, '=');
+	if (!var)
+		name_len = ft_strlen(arg);
+	else
+		name_len = ft_strlen(arg) - ft_strlen(var);
+	name = ft_strndup(arg, name_len);
+	if (invalid_name(name))
+	{
+		write(2, name, ft_strlen(name));
+		err_msg = ": not a valid identifier\n";
+		write(2, err_msg, ft_strlen(err_msg));
+		free(name);
+		return (1);
+	}
+	if (var)
+		modify_env(name, var, name_len, env_lst);
+	free(name);
+	return (0);
+}
+
+int	ft_export(char **args, t_env **env_lst)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	status = 0;
+	while (args[++i])
+	{
+		if (export_arg(args[i], env_lst))
+			status = 1;
+	}
+	return (status);
 }
