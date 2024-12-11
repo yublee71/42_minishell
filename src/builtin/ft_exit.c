@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:23:14 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/09 20:32:10 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:14:21 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_exit(char **args, t_info *info)
 			write(2, "exit: numeric argument required\n", 32);
 			exit_status = 2;
 		}
-		exit_with_message(NULL, exit_status, info);
+		exit_with_message("", exit_status, info);
 	}
 	write(2, "exit: too many arguments\n", 25);
 	return (1);
