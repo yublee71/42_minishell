@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/11 06:23:24 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:01:54 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,12 @@ int	ft_cd(char **args, t_info *info)
 {
 	int		status;
 	char	*path_to_go;
-	char	*err_msg;
 
 	if (!*info->env_lst)
 		return (0);
 	if (array_size((void **)args) > 2)
 	{
-		err_msg = "cd: too many arguments\n";
-		write(2, err_msg, ft_strlen(err_msg));
+		write(2, "cd: too many arguments\n", 23);
 		return (1);
 	}
 	path_to_go = args[1];
@@ -107,9 +105,8 @@ int	ft_cd(char **args, t_info *info)
 		status = change_directory_by_path(path_to_go, info->env_lst);
 	if (status != 0)
 	{
-		err_msg = ": No such file or directory\n";
 		write(2, path_to_go, ft_strlen(path_to_go));
-		write(2, err_msg, ft_strlen(err_msg));
+		write(2, ": No such file or directory\n", 28);
 		return (1);
 	}
 	return (0);
