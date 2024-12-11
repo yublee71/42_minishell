@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:47:01 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/05 02:10:10 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 06:15:46 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	modify_env(char *name, char *var, size_t name_len, t_env **env_lst)
 	if (env)
 	{
 		tmp = env->var;
-		env->var= ft_strdup(var);
+		env->var = ft_strdup(var);
 		free(tmp);
 	}
 	else

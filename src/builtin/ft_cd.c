@@ -6,17 +6,19 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/09 01:43:58 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 06:23:24 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static char *ft_get_parent_path(char *str)
+static char	*ft_get_parent_path(char *str)
 {
-	int i = 0;
-	int last_slash = -1;
+	int	i;
+	int	last_slash;
 
+	i = 0;
+	last_slash = -1;
 	while (str[i])
 	{
 		if (str[i] == '/')
@@ -28,7 +30,7 @@ static char *ft_get_parent_path(char *str)
 	return (ft_substr(str, 0, last_slash));
 }
 
-static void update_pwd(t_env **env_lst)
+static void	update_pwd(t_env **env_lst)
 {
 	t_env	*current;
 	char	*temp;
@@ -38,7 +40,7 @@ static void update_pwd(t_env **env_lst)
 	{
 		if (ft_strlen(current->name) == 3
 			&& !ft_strncmp(current->name, "PWD", 3))
-			break;
+			break ;
 		current = current->next;
 	}
 	temp = current->var;
@@ -103,10 +105,9 @@ int	ft_cd(char **args, t_env **env_lst)
 		status = change_directory_by_path(path_to_go, env_lst);
 	if (status != 0)
 	{
-		write(2, "cd: ", ft_strlen("cd :"));
+		err_msg = ": No such file or directory\n";
 		write(2, path_to_go, ft_strlen(path_to_go));
-		write(2, ": No such file or directory\n",
-			ft_strlen(": No such file or directory\n"));
+		write(2, err_msg, ft_strlen(err_msg));
 		return (1);
 	}
 	return (0);

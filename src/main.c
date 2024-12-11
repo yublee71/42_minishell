@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/11 00:47:06 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 06:17:09 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	parse_and_execute(char *cmd, t_env **env_lst, int *status_stored)
 	t_info	info;
 
 	root = parser(cmd, env_lst, *status_stored);
-	// ast_apply_infix(root, ast_print_node); //print tree
 	if (root)
 	{
 		info = init_executor(root, environ, env_lst, status_stored);
