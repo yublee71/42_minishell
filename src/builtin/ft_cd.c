@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:32:39 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/11 17:46:35 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:01:40 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	update_pwd(t_env **env_lst)
 {
 	t_env	*current;
 	char	*temp;
-	char	*temp2;
 
 	current = *env_lst;
 	while (current)
@@ -44,8 +43,19 @@ static void	update_pwd(t_env **env_lst)
 			break ;
 		current = current->next;
 	}
-	temp = current->var;
-	current->var = getcwd(NULL, 0);
+	if (current)
+	{
+		temp = current->var;
+		current->var = getcwd(NULL, 0);
+		free(temp);
+	}
+}
+
+static void	update_oldpwd(t_env **env_lst, char *current_path)
+{
+	t_env	*current;
+	char	*temp;
+
 	current = *env_lst;
 	while (current)
 	{
@@ -54,50 +64,47 @@ static void	update_pwd(t_env **env_lst)
 			break ;
 		current = current->next;
 	}
-	temp2 = current->var;
-	current->var = temp;
-	free(temp2);
-}
-
-static int	change_directory(char *path, t_env **env_lst)
-{
-	char	*path_togo;
-	int		status;
-	t_env	*current;
-
-	current = *env_lst;
-	status = 1;
-	while (current)
+	if (current)
 	{
-		if (ft_strlen(current->name) == ft_strlen(path)
-			&& !ft_strncmp(current->name, path, ft_strlen(path)))
-		{
-			if (!ft_strncmp("PWD", path, ft_strlen(path)))
-				path_togo = ft_get_parent_path(current->var);
-			else
-				path_togo = ft_strdup(current->var);
-			status = chdir(path_togo);
-			update_pwd(env_lst);
-			free(path_togo);
-			break ;
-		}
-		current = current->next;
+		temp = current->var;
+		current->var = current_path;
+		free(temp);
 	}
-	return (status);
 }
 
-static int	change_directory_by_path(char *path, t_env **env_lst)
+static int	change_directory(int w_case, char *path, t_env **env_lst)
 {
 	int		status;
+	char	*current_path;
+	t_env	*env;
 
-	status = chdir(path);
+	current_path = getcwd(NULL, 0);
+	if (w_case == 1)
+	{
+		env = find_name_in_env("HOME", 4, env_lst);
+		if (!env)
+			path = "";
+		else
+			path = env->var;
+		status = chdir(path);
+	}
+	else if (w_case == 2)
+	{
+		path = ft_get_parent_path(current_path);
+		status = chdir(path);
+		free(path);
+	}
+	else
+		status = chdir(path);
 	update_pwd(env_lst);
+	update_oldpwd(env_lst, current_path);
 	return (status);
 }
 
 int	ft_cd(char **args, t_info *info)
 {
 	int		status;
+	int		which_case;
 	char	*path_to_go;
 
 	if (!*info->env_lst)
@@ -108,13 +115,13 @@ int	ft_cd(char **args, t_info *info)
 		return (1);
 	}
 	path_to_go = args[1];
+	which_case = 0;
 	if (path_to_go == NULL)
-		status = change_directory("HOME", info->env_lst);
+		which_case = 1;
 	else if (ft_strlen(path_to_go) == 2 && !ft_strncmp(path_to_go, "..", 2))
-		status = change_directory("PWD", info->env_lst);
-	else
-		status = change_directory_by_path(path_to_go, info->env_lst);
-	if (status != 0)
+		which_case = 2;
+	status = change_directory(which_case, path_to_go, info->env_lst);
+	if (status != 0 && path_to_go)
 	{
 		write(2, path_to_go, ft_strlen(path_to_go));
 		write(2, ": No such file or directory\n", 28);

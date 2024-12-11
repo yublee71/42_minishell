@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/11 06:17:09 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:24:41 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	minishell(t_env **env_lst, int *status_stored)
 		if (g_sigint_received)
 		{
 			g_sigint_received = 0;
+			*status_stored = 130;
 			continue ;
 		}
 		cmd = readline("minishell$ ");

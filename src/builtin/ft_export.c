@@ -6,13 +6,13 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:47:01 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/11 06:15:46 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 18:41:05 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static t_env	*find_name_in_env(char *name, size_t name_len, t_env **env_lst)
+t_env	*find_name_in_env(char *name, size_t name_len, t_env **env_lst)
 {
 	t_env	*current;
 
