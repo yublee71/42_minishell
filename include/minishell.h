@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:55:33 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:49:59 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:26:47 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
@@ -28,6 +29,7 @@
 # define WRITE_END 1
 
 extern int	g_sigint_received;
+extern char	**environ;
 
 typedef enum e_token_type
 {
@@ -44,7 +46,15 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	int				heredoc_fd;
 }	t_token;
+
+typedef struct s_env
+{
+	char			*name;
+	char			*var;
+	struct s_env	*next;
+}	t_env;
 
 //AST: Abstract Syntax Tree
 typedef struct s_ast
@@ -54,34 +64,31 @@ typedef struct s_ast
 	t_token_type	type;
 	char			*value;
 	char			**args;
+	int				heredoc_fd;
 }	t_ast;
 
 typedef struct s_info
 {
 	int		cmd_cnt;
 	char	**env;
+	t_env	**env_lst;
 	int		**fds;
 	t_ast	*root;
+	int		*status;
 }	t_info;
 
-typedef struct s_env
-{
-	char			*name;
-	char			*var;
-	struct s_env	*next;
-}	t_env;
-
 //parser
-t_ast	*parser(char *cmd, char **env);
-
-//built-in
-int		call_builtin(char **env);
+t_ast	*parser(char *cmd, t_env **env_lst, int status);
 
 //execution initiation
-t_info	init_executor(t_ast *root, char **env);
+t_info	init_executor(t_ast *root, char **env, t_env **env_lst, int *status);
 
 //execution
 void	executor(t_ast *root, t_info *info);
+
+//built-in
+int		call_builtin(char **args, t_info *info);
+int		which_builtin(char *cmd);
 
 //tree utils
 void	ast_print_node(t_ast *node);
@@ -101,10 +108,14 @@ void	free_array_until(void **array, int i);
 
 //exit
 void	exit_with_message(char *str, int exit_no, t_info *info);
-void	free_before_exit(t_info	*info);
+void	free_before_exit(t_info *info, int is_parent_process);
 
 //signal
-void	handle_sigint(int sig);
 void	handle_sigint_heredoc(int sig);
+void	setup_signal(void);
+
+//env
+t_env	**get_env_lst(char **env);
+void	free_env(t_env **env_lst);
 
 #endif

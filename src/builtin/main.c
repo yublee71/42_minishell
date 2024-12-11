@@ -6,66 +6,51 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:48 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 19:50:37 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 21:26:21 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static void	ft_initenv(char **env, t_env **env_arr)
+int	which_builtin(char *cmd)
 {
-	int		i;
-	int		name_len;
-	int		env_len;
-	t_env	*new_env;
-	t_env	**current;
+	const char	*builtins[7] = {"cd", "echo", "env",
+		"exit", "export", "pwd", "unset"};
+	int			i;
 
-	current = env_arr;
 	i = 0;
-	name_len = 0;
-	env_len = 0;
-	while (env[i])
+	if (!cmd)
+		return (-1);
+	while (i < 7)
 	{
-		new_env = malloc(sizeof(t_env));
-		if (!new_env)
-			return ; //error_handle
-		name_len = ft_strchr(env[i], '='); // name= ; search for '=', return 4
-		if (!name_len)
-			exit(EXIT_FAILURE); //error handle
-		env_len = ft_strlen(env[i]) - name_len;
-		new_env->name = malloc(sizeof(char *) * name_len + 1);
-		new_env->var = malloc(sizeof(char *) * env_len);
-		if ((!new_env->name) || (!new_env->var))
-			return ;
-		new_env->name = ft_substr(env[i], 0, name_len);
-		new_env->var = ft_substr(env[i], name_len + 1, env_len);
-		new_env->next = NULL;
-		ft_envadd_back(env_arr, new_env);
+		if (ft_strlen(cmd) == ft_strlen(builtins[i])
+			&& !ft_strncmp(cmd, builtins[i], ft_strlen(builtins[i])))
+			return (i);
 		i++;
 	}
+	return (-1);
 }
 
-//TODO: modify
-int	call_builtin(char **env) // combine to the set up function, should be ready when first start the shell
+int	call_builtin(char **args, t_info *info)
 {
-	int		env_count;
-	t_env	**env_arr;
+	int	i;
+	int	status;
 
-	env_count = array_size(env);
-	env_arr = malloc(sizeof(t_env *) * env_count);
-	ft_initenv(env, env_arr);
-	//t_env *temp = *env_arr;
-	//while (temp)
-	//{
-	//	printf("%s=%s\n", temp->name, temp->var);
-	//	temp = temp->next;
-	//}
-	ft_unset("PWD", env_arr);
-	//temp = *env_arr;
-	//while (temp) 
-	//{
-	//	printf("%s=%s\n", temp->name, temp->var);
-	//	temp = temp->next;
-	//}
-	free(env_arr); // Free the array itself
+	i = which_builtin(args[0]);
+	status = -1;
+	if (i == 0)
+		status = ft_cd(args, info->env_lst);
+	else if (i == 1)
+		status = ft_echo(args, info);
+	else if (i == 2)
+		status = ft_env(info);
+	else if (i == 3)
+		status = ft_exit(args, info);
+	else if (i == 4)
+		status = ft_export(info->env);
+	else if (i == 5)
+		status = ft_pwd();
+	else if (i == 6)
+		status = ft_unset(args, info->env_lst);
+	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/03 00:04:50 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 00:47:06 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,35 @@
 
 int	g_sigint_received = 0;
 
-int	event(void) { 
-	return (0);
+static void	parse_and_execute(char *cmd, t_env **env_lst, int *status_stored)
+{
+	t_ast	*root;
+	t_info	info;
+
+	root = parser(cmd, env_lst, *status_stored);
+	// ast_apply_infix(root, ast_print_node); //print tree
+	if (root)
+	{
+		info = init_executor(root, environ, env_lst, status_stored);
+		executor(root, &info);
+	}
 }
 
-int	main(int argc, char **argv, char **env)
+static void	minishell(t_env **env_lst, int *status_stored)
 {
-	t_info	info;
-	t_ast	*root;
 	char	*cmd;
 
-	(void)argc;
-	(void)argv;
-	rl_event_hook = event;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		if (g_sigint_received)
 		{
 			g_sigint_received = 0;
-			continue;
+			continue ;
 		}
 		cmd = readline("minishell$ ");
-		if (cmd)
-		{
-			if (ft_strlen(cmd))
-			{
-				root = parser(cmd, env);//TODO:env needs to be modified beforehand
-				// ast_apply_infix(root, ast_print_node); //print tree
-				//free only when testing without execution
-				// free_array_until((void **)info.fds, info.cmd_cnt - 1);
-				// ast_apply_suffix(root, ast_free_node);
-				if (root)
-				{
-					info = init_executor(root, env);
-					executor(root, &info);
-				}
-			}
-		}
-		else
+		if (cmd && ft_strlen(cmd))
+			parse_and_execute(cmd, env_lst, status_stored);
+		else if (!cmd)
 		{
 			printf("exit\n");
 			break ;
@@ -61,5 +50,20 @@ int	main(int argc, char **argv, char **env)
 		add_history(cmd);
 		free(cmd);
 	}
+}
+
+int	main(void)
+{
+	t_env	**env_lst;
+	int		*status_stored;
+	int		status;
+
+	setup_signal();
+	env_lst = get_env_lst(environ);
+	status = 0;
+	status_stored = &status;
+	minishell(env_lst, status_stored);
+	free_env(env_lst);
 	rl_clear_history();
+	return (*status_stored);
 }

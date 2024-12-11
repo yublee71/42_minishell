@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 19:19:22 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 21:45:21 by yublee           ###   ########.fr       */
+/*   Created: 2024/12/06 19:09:30 by tikochoi          #+#    #+#             */
+/*   Updated: 2024/12/09 02:52:52 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "builtin.h"
 
-# include "../../include/minishell.h"
+int	ft_env(t_info *info)
+{
+	t_env	*current;
 
-int	ft_cd(char **args, t_env **env_lst);
-int	ft_echo(char **args, t_info *info);
-int	ft_export(char **env);
-int	ft_pwd(void);
-int	ft_unset(char **args, t_env **env_lst);
-int	ft_env(t_info *info);
-int	ft_exit(char **args, t_info *info);
-
-#endif
+	current = *(info->env_lst);
+	while (current)
+	{
+		ft_printf("%s=%s\n", current->name, current->var);
+		current = current->next;
+	}
+	return (0);
+}

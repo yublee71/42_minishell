@@ -6,25 +6,11 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:34:13 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/02 23:28:13 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/09 01:36:28 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
-// static int	is_builtin(char *cmd)
-// {
-// 	static char	*builtins[5] = {"pwd", "env", "cd", "export", "unset"};
-// 	int			i;
-// 	char		*str;
-
-// 	//needs to add echo later
-// 	i = -1;
-// 	while (++i < 5)
-// 		if (!ft_strncmp(builtins[i], cmd, ft_strlen(str)))
-// 			return (1);
-// 	return (0);
-// }
 
 static char	*join_cmd_to_path(char *cmd, char **paths)
 {
@@ -59,10 +45,12 @@ static char	*get_cmd_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
+	if (cmd[0] == '.' || cmd[0] == '/')
+		return (cmd);
 	while (!ft_strnstr(env[i], "PATH=", 5))
 		i++;
 	path = ft_strnstr(env[i], "PATH=", 5) + 5;
-	paths = ft_split(path, ':');// what if a variable has :?
+	paths = ft_split(path, ':');
 	cmd_path = join_cmd_to_path(cmd, paths);
 	free_array((void **)paths);
 	return (cmd_path);
@@ -70,21 +58,34 @@ static char	*get_cmd_path(char *cmd, char **env)
 
 void	child_process(int i, t_ast *cmd_node, t_info *info)
 {
-	char	**args;
-	char	*cmd_path;
+	char		**args;
+	char		*cmd_path;
+	struct stat	path_stat;
 
 	set_stdin(i, cmd_node, info);
 	set_stdout(i, cmd_node, info);
 	if (g_sigint_received)
 		exit_with_message(NULL, EXIT_SUCCESS, info);
 	args = cmd_node->args;
-	if (args == NULL)
+	if (args == NULL || !ft_strlen(args[0]))
 		exit_with_message(NULL, EXIT_SUCCESS, info);
-	// if (is_builtin(args[0]))
-	// 	exec_builtin(args, info);
-	cmd_path = get_cmd_path(args[0], info->env);
+	if (which_builtin(args[0]) >= 0)
+		exit_with_message("", call_builtin(cmd_node->args, info), info);
+	cmd_path = get_cmd_path(args[0], environ);
+	if ((ft_strlen(cmd_path) == 1 && cmd_path[0] == '.')
+		|| (ft_strlen(cmd_path) == 2 && !ft_strncmp(cmd_path, "..", 2)))
+		exit_with_message("filename argument required\n", 2, info);
 	if (access(cmd_path, X_OK) < 0)
-		exit_with_message(args[0], 127, info);
-	if (execve(cmd_path, args, info->env) == -1)
-		exit_with_message("execve", EXIT_FAILURE, info);
+	{
+		if (errno == 13)
+			exit_with_message(NULL, 126, info);
+		else if (cmd_path[0] == '.' || cmd_path[0] == '/')
+			exit_with_message(NULL, 127, info);
+		else
+			exit_with_message(cmd_path, 127, info);
+	}
+	if (!stat(cmd_path, &path_stat) && S_ISDIR(path_stat.st_mode))
+		exit_with_message(cmd_path, 126, info);
+	if (execve(cmd_path, args, environ) == -1)
+		exit_with_message(NULL, EXIT_FAILURE, info);
 }

@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:47:01 by tchoi             #+#    #+#             */
-/*   Updated: 2024/12/03 19:26:43 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/05 02:10:10 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	count_env(char **env)
 	return (i);
 }
 
-static int	find_first_nonuse(int *indexarr, char **env)
+static int	find_first_nonuse(int *indexarr)
 {
 	int	i;
 
@@ -44,11 +44,12 @@ static int	find_first_nonuse(int *indexarr, char **env)
 	{
 		if (indexarr[i] != -1)
 		{
-			indexarr[i] == -1;
+			indexarr[i] = -1;
 			return (i);
 		}
 		i++;
 	}
+	return (i);
 }
 
 static char	**ft_sort_env(char **env, int *indexarr, char **sortedarr, int env_len)
@@ -62,7 +63,7 @@ static char	**ft_sort_env(char **env, int *indexarr, char **sortedarr, int env_l
 	j = 0;
 	while (i < env_len)
 	{
-		first_index = find_first_notuse(indexarr, env);
+		first_index = find_first_nonuse(indexarr);
 		first_env = env[first_index];
 		j = 0;
 		while (j < env_len)
@@ -98,4 +99,5 @@ int	ft_export(char **env)
 		exit(EXIT_FAILURE);
 	initindex(&indexarr, count);
 	sortedarr = ft_sort_env(env, indexarr, sortedarr, count);
+	return (0);
 }

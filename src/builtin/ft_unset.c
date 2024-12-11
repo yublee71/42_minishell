@@ -6,56 +6,46 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 21:55:17 by tikochoi          #+#    #+#             */
-/*   Updated: 2024/12/03 19:51:01 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 00:50:28 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static t_env	*ft_lstlast(t_env *lst)
+static void	unset_arg(char *arg, t_env **env_lst)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
+	size_t	len;
+	t_env	*current;
+	t_env	*previous;
 
-static void	ft_envadd_back(t_env **lst, t_env *new)
-{
-	t_env	*last;
-
-	if (!lst || !new)
-		return ;
-	if (!*lst)
+	len = ft_strlen(arg);
+	current = *env_lst;
+	previous = NULL;
+	while (current)
 	{
-		*lst = new;
-		return ;
+		if (len == ft_strlen(current->name)
+			&&!ft_strncmp(arg, current->name, len))
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				*env_lst = current->next;
+			free(current->name);
+			free(current->var);
+			free(current);
+			return ;
+		}
+		previous = current;
+		current = current->next;
 	}
-	last = ft_lstlast(*lst);
-	last->next = new;
 }
 
-int	ft_unset(char *name, t_env **env_arr)
+int	ft_unset(char **args, t_env **env_lst)
 {
 	int		i;
-	t_env	*temp;
-	t_env	**current;
 
-	current = env_arr;
-	i = ft_strlen(name);
-	while (*current)
-	{
-		if (!ft_strncmp(name, (*current)->name, i)) // matched
-		{
-			temp = *current;
-			*current = (*current)->next;
-			free(temp->name);
-			free(temp->var);
-			free(temp);
-			return (1);
-		}
-		current = &(*current)->next;
-	}
+	i = 0;
+	while (args[++i])
+		unset_arg(args[i], env_lst);
 	return (0);
 }

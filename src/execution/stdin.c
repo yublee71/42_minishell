@@ -6,103 +6,63 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:59:05 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/02 23:57:43 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/10 21:12:46 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static void	add_random_str_to_str(char *buf, size_t size, char *s, size_t rand)
+static void	dup_redir_input_to_stdin_builtin(t_ast *in_node, t_info *info)
 {
-	char	random_code[1024];
-	char	tmp_buf[1];
-	size_t	len;
-	size_t	i;
-	int		fd;
+	int			fd_input;
+	t_ast		*file_node;
+	char		*err_msg;
 
-	if (rand + 1 > 1024)
+	file_node = in_node->left;
+	if (in_node->type != TK_HEREDOC && in_node->type != TK_INPUT)
 		return ;
-	len = ft_strlen(s) + rand;
-	if (len + 1 > size)
-		return ;
-	ft_strlcpy(buf, s, size);
-	fd = open("/dev/urandom", O_RDONLY);
-	i = 0;
-	ft_memset(random_code, 0, 1024);
-	while (read(fd, tmp_buf, 1) && i < rand)
-		if (ft_isalnum(tmp_buf[0]))
-			random_code[i++] = tmp_buf[0];
-	close(fd);
-	ft_strncat(buf, random_code, rand);
-}
-
-static void	write_until_delimiter(int new_fd, char *delimiter)
-{
-	char	*buf;
-
-	while (!g_sigint_received)
+	err_msg = ": No such file or directory\n";
+	if (in_node->type == TK_INPUT)
+		fd_input = open(file_node->value, O_RDONLY);
+	else if (in_node->type == TK_HEREDOC)
 	{
-		buf = readline("> ");
-		if (buf)
-		{
-			if (ft_strlen(buf) == ft_strlen(delimiter)
-				&& !ft_strncmp(buf, delimiter, ft_strlen(delimiter)))
-			{
-				if (!g_sigint_received)
-					free(buf);
-				return ;
-			}
-			write(new_fd, buf, ft_strlen(buf));
-			write(new_fd, "\n", 1);
-			free(buf);
-		}
-		else
-			g_sigint_received = 1;
+		fd_input = in_node->heredoc_fd;
+		err_msg = "heredoc";
 	}
-	if (!g_sigint_received)
-		free(buf);
-}
-
-static void	handle_heredoc_input(char *delimiter, t_info *info)
-{
-	int		new_fd;
-	int		tty_fd;
-	char	filename[FILENAME_MAX];
-
-	signal(SIGINT, handle_sigint_heredoc);
-	ft_memset(filename, 0, FILENAME_MAX);
-	add_random_str_to_str(filename, FILENAME_MAX, "/tmp/heredoc_input", 6);
-	new_fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	tty_fd = open("/dev/tty", O_RDONLY);
-	if (tty_fd < 0 || new_fd < 0)
-		exit_with_message("open", EXIT_FAILURE, info);
-	if (dup2(tty_fd, STDIN_FILENO) < 0)
-		exit_with_message("heredoc", EXIT_FAILURE, info);
-	write_until_delimiter(new_fd, delimiter);
-	new_fd = open(filename, O_RDWR);
-	if (new_fd < 0)
-		exit_with_message("open", EXIT_FAILURE, info);
-	if (dup2(new_fd, STDIN_FILENO) < 0)
-		exit_with_message("heredoc", EXIT_FAILURE, info);
-	close(new_fd);
-	close(tty_fd);
-	unlink(filename);
+	if (fd_input < 0)
+	{
+		write(2, file_node->value, ft_strlen(file_node->value));
+		write(2, err_msg, ft_strlen(err_msg));
+		*(info->status) = 127;
+		return ;
+	}
+	else if (dup2(fd_input, STDIN_FILENO) < 0)
+		exit_with_message(file_node->value, EXIT_FAILURE, info);
+	close(fd_input);
 }
 
 static void	dup_redir_input_to_stdin(t_ast *in_node, t_info *info)
 {
-	int		fd_input;
-	t_ast	*file_node;
+	int			fd_input;
+	t_ast		*file_node;
 
 	file_node = in_node->left;
 	fd_input = -1;
 	if (in_node->type == TK_HEREDOC)
-		handle_heredoc_input(file_node->value, info);
+	{
+		if (dup2(in_node->heredoc_fd, STDIN_FILENO) < 0)
+			exit_with_message("heredoc", EXIT_FAILURE, info);
+		close(in_node->heredoc_fd);
+	}
 	else if (in_node->type == TK_INPUT)
 	{
 		fd_input = open(file_node->value, O_RDONLY);
 		if (fd_input < 0 || dup2(fd_input, STDIN_FILENO) < 0)
-			exit_with_message(file_node->value, EXIT_FAILURE, info);
+		{
+			write(2, file_node->value, ft_strlen(file_node->value));
+			write(2, ": ", 2);
+			exit_with_message(NULL, EXIT_FAILURE, info);
+		}
 		close(fd_input);
 	}
 }
@@ -121,7 +81,10 @@ void	set_stdin(int i, t_ast *cmd, t_info *info)
 	in_node = cmd->left;
 	while (in_node)
 	{
-		dup_redir_input_to_stdin(in_node, info);
+		if (i != -1)
+			dup_redir_input_to_stdin(in_node, info);
+		else
+			dup_redir_input_to_stdin_builtin(in_node, info);
 		in_node = in_node->left->left;
 	}
 }

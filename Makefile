@@ -6,7 +6,7 @@
 #    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 14:55:22 by yublee            #+#    #+#              #
-#    Updated: 2024/12/03 18:47:42 by yublee           ###   ########.fr        #
+#    Updated: 2024/12/09 21:14:55 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,15 +28,18 @@ SRCS			= \
 					src/main.c \
 					src/parsing/build_tree.c \
 					src/parsing/expansion.c \
+					src/parsing/heredoc.c \
 					src/parsing/main.c \
 					src/parsing/post_syntax_validation.c \
 					src/parsing/pre_syntax_validation.c \
 					src/parsing/tokenization.c \
 					src/parsing/utils_args.c \
+					src/parsing/utils_expansion.c \
 					src/parsing/utils_quote.c \
 					src/parsing/utils.c \
 					src/init_execution/main.c \
 					src/execution/child_process.c \
+					src/execution/exec_builtin.c \
 					src/execution/main.c \
 					src/execution/stdin.c \
 					src/execution/stdout.c \
@@ -45,11 +48,15 @@ SRCS			= \
 					src/utils/utils_token.c \
 					src/utils/utils_tree.c \
 					src/utils/signal.c \
+					src/utils/env.c \
 					src/builtin/ft_cd.c \
 					src/builtin/ft_echo.c \
 					src/builtin/ft_export.c \
 					src/builtin/ft_pwd.c \
 					src/builtin/ft_unset.c \
+					src/builtin/ft_env.c \
+					src/builtin/ft_exit.c \
+					src/builtin/main.c \
 
 BUILD_DIR		= build
 OBJS			= $(SRCS:%.c=$(BUILD_DIR)/%.o)
