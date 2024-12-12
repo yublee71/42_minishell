@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:02:47 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/10 21:16:09 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:43:06 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	write_until_delimiter(int new_fd, char *delimiter)
 			free(buf);
 		}
 		else
-			g_sigint_received = 1;
+			return ;
 	}
 	if (!g_sigint_received)
 		free(buf);

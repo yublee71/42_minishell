@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 01:29:40 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 02:49:19 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:05:36 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_builtin(t_ast *cmd_node, t_info *info)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (saved_stdin == -1 || saved_stdout == -1)
 		exit_with_message("dup", EXIT_FAILURE, info);
-	set_stdin(-1, cmd_node, info); // TODO: handle non-existing files
+	set_stdin(-1, cmd_node, info);
 	set_stdout(-1, cmd_node, info);
 	*(info->status) = call_builtin(cmd_node->args, info);
 	if (dup2(saved_stdin, STDIN_FILENO) == -1)

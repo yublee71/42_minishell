@@ -6,7 +6,7 @@
 /*   By: yublee <yublee@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:17:01 by yublee            #+#    #+#             */
-/*   Updated: 2024/12/09 20:27:17 by yublee           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:07:38 by yublee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ static void	ft_initenv(t_env **lst, char **env)
 		new_env = (t_env *)malloc(sizeof(t_env));
 		if (!new_env)
 			exit(EXIT_FAILURE);
-		var = ft_strchr(env[i], '='); // name= ; search for '=', return 4
+		var = ft_strchr(env[i], '=');
 		if (!var)
-			exit(EXIT_FAILURE); //error handle
+			exit(EXIT_FAILURE);
 		name_len = ft_strlen(env[i]) - ft_strlen(var);
 		env_len = ft_strlen(env[i]) - name_len;
 		new_env->name = ft_substr(env[i], 0, name_len);
