@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile.mk                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abelov <abelov@student.42london.com>       +#+  +:+       +#+         #
+#    By: yublee <yublee@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/07/02 16:25:57 by abelov            #+#    #+#              #
-#    Updated: 2024/07/02 16:25:59 by abelov           ###   ########.fr        #
+#    Created: 2024/07/02 16:25:57 by yublee            #+#    #+#              #
+#    Updated: 2024/07/02 16:25:59 by yublee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
